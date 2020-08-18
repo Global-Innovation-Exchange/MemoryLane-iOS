@@ -52,6 +52,7 @@
 		2D02E47B1E0B4A5D006451C7 /* MemoryLane-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MemoryLane-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* MemoryLane-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MemoryLane-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45B9F73C0AFAB7C09EEF155B /* Pods-MemoryLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryLane.debug.xcconfig"; path = "Target Support Files/Pods-MemoryLane/Pods-MemoryLane.debug.xcconfig"; sourceTree = "<group>"; };
+		70B6137724EBBD000004C32A /* MemoryLane.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MemoryLane.entitlements; path = MemoryLane/MemoryLane.entitlements; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MemoryLane/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		93206D267120A622883E60D1 /* Pods-MemoryLane-MemoryLaneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryLane-MemoryLaneTests.debug.xcconfig"; path = "Target Support Files/Pods-MemoryLane-MemoryLaneTests/Pods-MemoryLane-MemoryLaneTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C96BF2BEA8BCB17EA66A158D /* Pods-MemoryLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryLane.release.xcconfig"; path = "Target Support Files/Pods-MemoryLane/Pods-MemoryLane.release.xcconfig"; sourceTree = "<group>"; };
@@ -126,6 +127,7 @@
 		13B07FAE1A68108700A75B9A /* MemoryLane */ = {
 			isa = PBXGroup;
 			children = (
+				70B6137724EBBD000004C32A /* MemoryLane.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -697,6 +699,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MemoryLane/MemoryLane.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GU2J7JAR56;
 				ENABLE_BITCODE = NO;
@@ -707,7 +710,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.gix.MemoryLane;
 				PRODUCT_NAME = MemoryLane;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -722,6 +725,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MemoryLane/MemoryLane.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GU2J7JAR56;
 				INFOPLIST_FILE = MemoryLane/Info.plist;
@@ -731,7 +735,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.gix.MemoryLane;
 				PRODUCT_NAME = MemoryLane;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
