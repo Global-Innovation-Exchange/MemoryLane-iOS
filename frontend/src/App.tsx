@@ -11,9 +11,9 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Player from './screens/player';
 import WelcomeScreen from './screens/welcome';
 import ThemeScreen from './screens/theme';
+import ControllerScreen from './screens/controller';
 
 const RootStack = createStackNavigator();
 
@@ -23,7 +23,7 @@ const App = () => {
       <RootStack.Navigator>
         <RootStack.Screen name="Home" component={WelcomeScreen} />
         <RootStack.Screen name="Theme Selection" component={ThemeScreen} />
-        <RootStack.Screen name="Player" component={Player} />
+        <RootStack.Screen name="Controller" component={ControllerScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

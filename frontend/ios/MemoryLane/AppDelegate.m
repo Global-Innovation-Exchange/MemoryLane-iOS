@@ -37,6 +37,7 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
   GCKDiscoveryCriteria *criteria = [[GCKDiscoveryCriteria alloc] initWithApplicationID:kGCKDefaultMediaReceiverApplicationID];
   GCKCastOptions* options = [[GCKCastOptions alloc] initWithDiscoveryCriteria:criteria];
+  options.physicalVolumeButtonsWillControlDeviceVolume = YES;
   [GCKCastContext setSharedInstanceWithOptions:options];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self

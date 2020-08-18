@@ -7,17 +7,17 @@ import {
   NavigationState,
 } from 'react-navigation';
 
-const _showAlert = (navigation: any) => {
-  Alert.alert(
-    'Casting to TV',
-    'In order to continue you need to cast content to a smart TV. Please follow the instruction',
-    [
-      {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-      {text: 'OK', onPress: () => navigation.navigate('Theme Selection')},
-    ],
-    {cancelable: false},
-  );
-};
+// const _showAlert = (navigation: any) => {
+//   Alert.alert(
+//     'Casting to TV',
+//     'In order to continue you need to cast content to a smart TV. Please follow the instruction',
+//     [
+//       {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+//       {text: 'OK', onPress: () => navigation.navigate('Theme Selection')},
+//     ],
+//     {cancelable: false},
+//   );
+// };
 
 var personName = 'Barbara';
 
@@ -43,7 +43,7 @@ const WelcomeScreen = ({navigation}: Props) => {
       <View style={styles.ControlsBtnsSection}>
         <TouchableOpacity
           style={styles.btnDesign}
-          onPress={_showAlert.bind(null, navigation)}>
+          onPress={() => navigation.navigate('Theme Selection')}>
           <Text style={styles.btnText}>Start</Text>
         </TouchableOpacity>
       </View>

@@ -1,17 +1,19 @@
 // Import React, necessary UI modules from React native
-import React, {useState} from 'react';
+import React from 'react';
 import {
   SectionList,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
+import GoogleCast, {CastButton} from 'react-native-google-cast';
 
 // Themes btns data (lists)
 const fixedThemes = [
@@ -68,119 +70,135 @@ const SuggestedThemes = [
   },
 ];
 
-interface Props {
+interface ThemeScreenProps {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-const ThemeScreen = ({navigation}: Props) => {
-  const [, setSelectedTheme] = useState('');
-  return (
-    <View style={styles.container}>
-      {/* the screen title bar*/}
-      <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>Hello</Text>
-      </View>
+class ThemeScreen extends React.Component<ThemeScreenProps> {
+  state = {
+    selectedTheme: '',
+  };
 
-      {/* content section*/}
-      <View style={styles.controlContainer}>
-        <View style={styles.promptCastSection}>
-          {/* promote choosing a theme*/}
-          <View style={styles.promotContainer}>
-            <Text style={styles.controlText}>
-              {' '}
-              What theme do you want to explore?{' '}
-            </Text>
+  componentDidMount() {
+    GoogleCast.showIntroductoryOverlay();
+    // GoogleCast.launchExpandedControls();
+  }
+
+  handleButtonPressed = (item) => {
+    const {navigation} = this.props;
+    this.setState({selectedTheme: item.name});
+    GoogleCast.getCastState().then((state) => {
+      if (state === 'Connected') {
+        navigation.navigate('Controller');
+      } else {
+        Alert.alert(
+          'Casting to TV',
+          'In order to continue you need to cast content to a smart TV. Please follow the instruction',
+        );
+      }
+    });
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        {/* the screen title bar*/}
+        <View style={styles.welcomeContainer}>
+          <Text style={styles.welcomeText}>Hello</Text>
+        </View>
+
+        {/* content section*/}
+        <View style={styles.controlContainer}>
+          <View style={styles.promptCastSection}>
+            {/* promote choosing a theme*/}
+            <View style={styles.promotContainer}>
+              <Text style={styles.controlText}>
+                {' '}
+                What theme do you want to explore?{' '}
+              </Text>
+            </View>
+
+            {/* casting btn*/}
+            <TouchableOpacity>
+              <View style={styles.controlCast}>
+                <CastButton style={styles.castButtonIOS} />
+                <Text style={styles.castText}> Cast on TV </Text>
+              </View>
+            </TouchableOpacity>
           </View>
 
-          {/* stop casting btn*/}
-          {/* <TouchableOpacity>
-            <View style={styles.controlCast}>
-              <Feather name={'cast'}
-                size={40}
-                color="black" />
-              <Text style={styles.castText}> stop TV </Text>
-            </View>
-          </TouchableOpacity> */}
-        </View>
+          {/* theme btn lists */}
+          <View style={styles.ControlsBtnsSection}>
+            <SectionList
+              horizontal
+              sections={[
+                {
+                  title: '',
+                  data: fixedThemes,
+                  renderItem: ({item}) => (
+                    <TouchableOpacity
+                      style={[
+                        styles.btnDesign,
+                        {backgroundColor: item.btncolor},
+                      ]}
+                      onPress={() => this.handleButtonPressed(item)}>
+                      <Text style={styles.btnText}>{item.name}</Text>
+                    </TouchableOpacity>
+                  ),
+                },
+              ]}
+              keyExtractor={(item, index) => item.name + index}
+            />
 
-        {/* theme btn lists */}
-        <View style={styles.ControlsBtnsSection}>
-          <SectionList
-            horizontal
-            sections={[
-              {
-                title: '',
-                data: fixedThemes,
-                renderItem: ({item}) => (
-                  <TouchableOpacity
-                    style={[styles.btnDesign, {backgroundColor: item.btncolor}]}
-                    onPress={() => setSelectedTheme(item.name)}>
-                    <Text style={styles.btnText}>{item.name}</Text>
-                  </TouchableOpacity>
-                ),
-              },
-            ]}
-            keyExtractor={(item, index) => item.name + index}
-          />
+            <SectionList
+              horizontal
+              sections={[
+                {
+                  title: '',
+                  data: CommonThemes,
+                  renderItem: ({item}) => (
+                    <TouchableOpacity
+                      style={[
+                        styles.btnDesign,
+                        {backgroundColor: item.btncolor},
+                      ]}
+                      onPress={() => this.handleButtonPressed(item)}>
+                      <Text style={styles.btnText}>{item.name}</Text>
+                    </TouchableOpacity>
+                  ),
+                },
+              ]}
+              keyExtractor={(item, index) => item.name + index}
+            />
 
-          <SectionList
-            horizontal
-            sections={[
-              {
-                title: '',
-                data: CommonThemes,
-                renderItem: ({item}) => (
-                  <TouchableOpacity
-                    style={[styles.btnDesign, {backgroundColor: item.btncolor}]}
-                    onPress={() => setSelectedTheme(item.name)}>
-                    <Text style={styles.btnText}>{item.name}</Text>
-                  </TouchableOpacity>
-                ),
-              },
-            ]}
-            keyExtractor={(item, index) => item.name + index}
-          />
-
-          <SectionList
-            horizontal
-            sections={[
-              {
-                title: '',
-                data: SuggestedThemes,
-                renderItem: ({item}) => (
-                  <TouchableOpacity
-                    style={[styles.btnDesign, {backgroundColor: item.btncolor}]}
-                    onPress={() => {
-                      setSelectedTheme(item.name);
-                      navigation.navigate('Player');
-                    }}>
-                    <Text style={styles.btnText}>{item.name}</Text>
-                  </TouchableOpacity>
-                ),
-              },
-            ]}
-            keyExtractor={(item, index) => item.name + index}
-          />
+            <SectionList
+              horizontal
+              sections={[
+                {
+                  title: '',
+                  data: SuggestedThemes,
+                  renderItem: ({item}) => (
+                    <TouchableOpacity
+                      style={[
+                        styles.btnDesign,
+                        {backgroundColor: item.btncolor},
+                      ]}
+                      onPress={() => {
+                        this.handleButtonPressed(item);
+                      }}>
+                      <Text style={styles.btnText}>{item.name}</Text>
+                    </TouchableOpacity>
+                  ),
+                },
+              ]}
+              keyExtractor={(item, index) => item.name + index}
+            />
+          </View>
         </View>
       </View>
-    </View>
-  );
-};
-
-// // Create and export Home screen component
-// export default class ThemeScreen extends React.Component {
-//   static navigationOptions = {
-//     header: null, // disable app header
-//   };
-
-//   state = {
-//     selectedTheme: '',
-//   };
-
-//   render() {
-
-//   }
-// }
+    );
+  }
+}
 
 // Add some simple styles
 const styles = StyleSheet.create({
@@ -243,9 +261,15 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
   },
-
   btnText: {
     fontSize: 33,
+  },
+  castButtonIOS: {
+    height: 40,
+    width: 40,
+    marginRight: 10,
+    alignSelf: 'flex-end',
+    tintColor: 'black',
   },
 });
 
