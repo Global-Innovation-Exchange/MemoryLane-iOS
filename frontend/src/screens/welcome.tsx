@@ -1,6 +1,6 @@
 // Import React, necessary UI modules from React native
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {
   NavigationParams,
   NavigationScreenProp,

@@ -104,7 +104,7 @@ class ControllerScreen extends React.Component {
     fav: false,
   };
 
-  handleChange = (item) => {
+  handleChange = (item: any) => {
     console.log(item.name);
     if (item.name === 'Favorite' && this.state.fav === false) {
       this.setState({fav: true});
