@@ -92,18 +92,73 @@ const feedbackControls = [
 
 // Create and export Home screen component
 class ControllerScreen extends React.Component {
+  constructor(props: any) {
+    super(props);
+    this.cast = this.cast.bind(this);
+    const data = require('../content.json');
+    this.state = {
+      videos: data.categories[0].videos.map((video) => ({
+        title: video.title,
+        subtitle: video.subtitle,
+        studio: video.identifier,
+        duration: video.streamDuration,
+        contentType: video.contentType,
+        mediaUrl: video.mediaUrl,
+        imageUrl: video.imageUrl,
+        playPosition: video.playPosition,
+      })),
+      playingTitle: '',
+      volume: 10,
+      selectedButton: 'all',
+      paused: false,
+      liked: false,
+      disliked: false,
+      fav: false,
+    };
+  }
+
   static navigationOptions = {
     header: null, // disable app header
   };
 
-  state = {
-    selectedButton: 'audios',
-    paused: false,
-    liked: false,
-    disliked: false,
-    fav: false,
-  };
+  componentDidMount() {
+    this.registerListeners();
+    this.cast(0);
+  }
 
+  cast(index) {
+    const {videos} = this.state;
+    // GoogleCast.getCastDevice().then(console.log);
+    GoogleCast.castMedia(videos[index]);
+    this.setState({playingTitle: videos[index].title});
+    this.sendMessage();
+  }
+
+  sendMessage() {
+    const channel = 'urn:x-cast:com.reactnative.googlecast.example';
+    GoogleCast.initChannel(channel)
+      .then(() => {
+        GoogleCast.sendMessage(channel, JSON.stringify({message: 'Hello'}));
+      })
+      .then(null, (err) => console.log('err: ', err));
+  }
+
+  registerListeners() {
+    const events = `
+      SESSION_STARTING SESSION_STARTED SESSION_START_FAILED SESSION_SUSPENDED
+      SESSION_RESUMING SESSION_RESUMED SESSION_ENDING SESSION_ENDED
+      MEDIA_STATUS_UPDATED MEDIA_PLAYBACK_STARTED MEDIA_PLAYBACK_ENDED MEDIA_PROGRESS_UPDATED
+      CHANNEL_CONNECTED CHANNEL_DISCONNECTED CHANNEL_MESSAGE_RECEIVED
+    `
+      .trim()
+      .split(/\s+/);
+    // console.log(events);
+    events.forEach((event) => {
+      GoogleCast.EventEmitter.addListener(GoogleCast[event], function () {
+        // console.log(event, arguments);
+      });
+    });
+  }
   handleChange = (item: any) => {
     console.log(item.name);
     if (item.name === 'Favorite' && this.state.fav === false) {
@@ -126,14 +181,15 @@ class ControllerScreen extends React.Component {
   ////////// first part update ends here //////////////////////////////////
 
   selectedColor = '#EDD5A6'; //when media type selected
-  playing = 'name of what on tv'; //hold what playing name
 
   render() {
+    const {playingTitle} = this.state;
+    console.log(playingTitle);
     return (
       <View style={styles.container}>
         {/* the screen title bar*/}
         <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Theme: Music Industry</Text>
+          <Text style={styles.welcomeText}>Theme: Your Favoritesrr</Text>
         </View>
 
         {/* Media Selection Nav*/}
@@ -201,7 +257,7 @@ class ControllerScreen extends React.Component {
             <View style={styles.promotContainer}>
               <Text style={styles.controlText}>
                 {' '}
-                Prompt Question will be here{' '}
+                Have you ever watched this before?{' '}
               </Text>
             </View>
 
@@ -218,7 +274,7 @@ class ControllerScreen extends React.Component {
           <View style={styles.playingContainer}>
             <Text style={styles.playingText}>
               {' '}
-              Plyaing on tv {this.playing}{' '}
+              Plyaing on TV: {playingTitle}{' '}
             </Text>
           </View>
 
@@ -239,7 +295,10 @@ class ControllerScreen extends React.Component {
                         style={[
                           styles.btnDesign,
                           {backgroundColor: item.btncolor},
-                        ]}>
+                        ]}
+                        onPress={() => {
+                          GoogleCast.setVolume(10);
+                        }}>
                         <Text style={styles.btnText}>{item.name}</Text>
                         <Feather name={item.icon} style={styles.iconStyle} />
                       </TouchableOpacity>
@@ -271,10 +330,17 @@ class ControllerScreen extends React.Component {
                           if (item.name === 'Pause') {
                             if (this.state.paused === false) {
                               this.setState({paused: true});
+                              GoogleCast.pause();
                             }
                             if (this.state.paused === true) {
                               this.setState({paused: false});
+                              GoogleCast.play();
                             }
+                          }
+                          if (item.name === 'Next') {
+                            this.cast(1);
+                          } else if (item.name === 'Previous') {
+                            this.cast(0);
                           }
                         }}>
                         <Text style={styles.btnText}>

@@ -75,83 +75,30 @@ interface ThemeScreenProps {
 }
 
 class ThemeScreen extends React.Component<ThemeScreenProps> {
-  constructor(props: any) {
-    super(props);
-    this.cast = this.cast.bind(this);
-  }
-
   state = {
     selectedTheme: '',
   };
 
   componentDidMount() {
     GoogleCast.showIntroductoryOverlay();
-    this.registerListeners();
-    // GoogleCast.launchExpandedControls();
-  }
-
-  cast() {
-    console.log('casting');
-    GoogleCast.getCastDevice().then(console.log);
-    GoogleCast.castMedia({
-      mediaUrl:
-        'https://commondatastorage.googleapis.com/gtv-videos-bucket/CastVideos/mp4/BigBuckBunny.mp4',
-      imageUrl:
-        'https://commondatastorage.googleapis.com/gtv-videos-bucket/CastVideos/images/480x270/BigBuckBunny.jpg',
-      title: 'Big Buck Bunny',
-      subtitle:
-        'A large and lovable rabbit deals with three tiny bullies, led by a flying squirrel, who are determined to squelch his happiness.',
-      studio: 'Blender Foundation',
-      streamDuration: 596, // seconds
-      contentType: 'video/mp4', // Optional, default is "video/mp4"
-      playPosition: 10, // seconds
-      customData: {
-        // Optional, your custom object that will be passed to as customData to reciever
-        customKey: 'customValue',
-      },
-    });
-    this.sendMessage();
-  }
-
-  sendMessage() {
-    const channel = 'urn:x-cast:com.reactnative.googlecast.example';
-    GoogleCast.initChannel(channel).then(() => {
-      GoogleCast.sendMessage(channel, JSON.stringify({message: 'Hello'}));
-    });
   }
 
   handleButtonPressed = (item: any) => {
     const {navigation} = this.props;
     this.setState({selectedTheme: item.name});
-    GoogleCast.getCastState().then((state) => {
-      if (state === 'Connected') {
-        navigation.navigate('Controller');
-        this.cast();
-      } else {
-        Alert.alert(
-          'Casting to TV',
-          'In order to continue you need to cast content to a smart TV. Please follow the instruction',
-        );
-      }
-    });
+    GoogleCast.getCastState()
+      .then((state) => {
+        if (state === 'Connected') {
+          navigation.navigate('Controller');
+        } else {
+          Alert.alert(
+            'Casting to TV',
+            'In order to continue you need to cast content to a smart TV. Please follow the instruction',
+          );
+        }
+      })
+      .then(null, (err) => console.log('err: ', err));
   };
-
-  registerListeners() {
-    const events = `
-      SESSION_STARTING SESSION_STARTED SESSION_START_FAILED SESSION_SUSPENDED
-      SESSION_RESUMING SESSION_RESUMED SESSION_ENDING SESSION_ENDED
-      MEDIA_STATUS_UPDATED MEDIA_PLAYBACK_STARTED MEDIA_PLAYBACK_ENDED MEDIA_PROGRESS_UPDATED
-      CHANNEL_CONNECTED CHANNEL_DISCONNECTED CHANNEL_MESSAGE_RECEIVED
-    `
-      .trim()
-      .split(/\s+/);
-    // console.log(events);
-    events.forEach((event) => {
-      GoogleCast.EventEmitter.addListener(GoogleCast[event], function () {
-        console.log(event, arguments);
-      });
-    });
-  }
 
   render() {
     return (

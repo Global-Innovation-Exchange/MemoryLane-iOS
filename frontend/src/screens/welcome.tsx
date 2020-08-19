@@ -33,7 +33,7 @@ const WelcomeScreen = ({navigation}: Props) => {
         <Text style={styles.welcomeText}>Welcome {personName},</Text>
 
         <Text style={styles.welcomeText}>
-          Are you ready for some good time?
+          Ready for your Memory Lane Exprience?
         </Text>
       </View>
 

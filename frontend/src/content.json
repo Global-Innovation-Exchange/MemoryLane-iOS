@@ -1,0 +1,35 @@
+{
+  "categories": [
+    {
+      "name": "Movies",
+      "videos": [
+        {
+          "mediaUrl": "https://ia800204.us.archive.org/32/items/TLS_Lucy_Meets_Tennessee_Ernie_Ford/TLS_Lucy_Meets_Tennessee_Ernie_Ford_512kb.mp4",
+          "imageUrl": "https://insidepulse.com/wp-content/uploads/2016/11/vlcsnap-2016-11-09-20h24m20s787-620x315.png",
+          "title": "Lucy Meets Tennessee Ernie Ford",
+          "subtitle": "A very good episode of \"Lucy\" with a take-off on the television show, \"The Beverly Hillbillies,\" which was popular at the time. It would have been funnier to the audience of that time period familiar with Tennessee Ernie Ford, Lucille Ball, and Gale Gordon.",
+          "identifier": "TLS_Lucy_Meets_Tennessee_Ernie_Ford",
+          "streamDuration": 596,
+          "contentType": "video/mp4",
+          "playPosition": 9,
+          "customData": {
+            "customKey": "customValue"
+          }
+        },
+        {
+          "mediaUrl": "https://ia802700.us.archive.org/26/items/1958-02-03_First_US_Satellite_Launched/1958-02-03_First_US_Satellite_Launched_512kb.mp4",
+          "imageUrl": "https://ia802700.us.archive.org/26/items/1958-02-03_First_US_Satellite_Launched/__ia_thumb.jpg",
+          "title": "First U.S. Satellite Launched! 1958/02/03",
+          "subtitle": "(1) Cape Canaveral launch of 30-pound Explorer satellite by 3-stage Redstone missile, press conference with von Braun and Van Allen with model, night time launch showing spinning satellite on top of rocket (2) \"Egypt, Syria Merge In New Arab Republic\" - Nasser and Kawakli? of Syria meet in Cairo to form UAR with 30 million population, sign at table - mideast (partial newsreel).",
+          "identifier": "TLS_Lucy_Meets_Tennessee_Ernie_Ford",
+          "streamDuration": 596,
+          "contentType": "video/mp4",
+          "playPosition": 0,
+          "customData": {
+            "customKey": "customValue"
+          }
+        }
+      ]
+    }
+  ]
+}
