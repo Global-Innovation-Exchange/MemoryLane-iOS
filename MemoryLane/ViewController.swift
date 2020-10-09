@@ -10,6 +10,7 @@ import AVFoundation
 
 let WIDTH = UIScreen.main.bounds.width
 let HEIGHT = UIScreen.main.bounds.height
+
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     let captureSession = AVCaptureSession()
@@ -18,19 +19,21 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     let textlayer = CATextLayer()
     var shapeLayers = [CAShapeLayer]()
     var transform = CGAffineTransform.identity
+    // boolean for button press
+    static var buttonPressed: Bool = false
     
-    // Camera data frame data queue
+    // camera data frame data queue
     let queue = DispatchQueue(label: "com.camera.video.queue")
     
     // color picker point
     var pickers = [
-        CGPoint(x: WIDTH/5, y: HEIGHT/7),
-        CGPoint(x: WIDTH/5*2, y: HEIGHT/7),
-        CGPoint(x: WIDTH/5*3, y: HEIGHT/7),
-        CGPoint(x: WIDTH/5*4, y: HEIGHT/7),
+        CGPoint(x: WIDTH/5, y: HEIGHT/10),
+        CGPoint(x: WIDTH/5*2, y: HEIGHT/10),
+        CGPoint(x: WIDTH/5*3, y: HEIGHT/10),
+        CGPoint(x: WIDTH/5*4, y: HEIGHT/10),
     ]
     
-    let buttons = ["Like", "Repeat", "Next", "Turn Off"]
+    let buttonNames = ["Like", "Repeat", "Next", "Turn Off"]
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,20 +72,24 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         guard let cgImage = content.makeImage() else {
             return
         }
-        
         DispatchQueue.main.async {
             self.previewLayer.contents = cgImage
             for (n, picker) in self.pickers.enumerated() {
-                // Update the point after view transform
+                // Update the point after transformation
                 let position = picker.applying(self.transform)
-                if self.previewLayer.buttonPressed(at: position) {
-                    self.shapeLayers[n].strokeColor = UIColor.green.cgColor
-                    self.showToast(self.buttons[n] + " Button Pressed")
+                if self.previewLayer.isLight(at: position) {
+                    if !ViewController.buttonPressed {
+                        self.shapeLayers[n].strokeColor = UIColor.green.cgColor
+                        self.showToast(self.buttonNames[n] + " Button Pressed")
+                        print("Button Pressed")
+                        print(ViewController.buttonPressed)
+                        ViewController.buttonPressed = true
+                    }
                 } else {
                     self.shapeLayers[n].strokeColor = UIColor.red.cgColor
+                    ViewController.buttonPressed = false
                 }
             }
-//            self.lineShape.strokeColor = color?.cgColor
         }
         
     }
@@ -120,27 +127,24 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             self.shapeLayers.append(circle)
             view.layer.addSublayer(dot)
         }
-        
     }
     
     func getIndicators(point: CGPoint) -> (circle: CAShapeLayer, dot: CAShapeLayer) {
         // circle
         let circlePath = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: 40, height: 40))
         let lineShape = CAShapeLayer()
-        lineShape.frame = CGRect.init(x: point.x-20, y:point.y-20, width: 40, height: 40)
+        lineShape.frame = CGRect.init(x: point.x-20, y:HEIGHT/5*4, width: 40, height: 40)
         lineShape.lineWidth = 5
         lineShape.strokeColor = UIColor.red.cgColor
         lineShape.path = circlePath.cgPath
         lineShape.fillColor = UIColor.clear.cgColor
-//        self.view.layer.addSublayer(lineShape)
 
         // dot
         let linePath1 = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: 8, height: 8))
         let lineShape1 = CAShapeLayer()
-        lineShape1.frame = CGRect.init(x: point.x-4, y:point.y-4, width: 8, height: 8)
+        lineShape1.frame = CGRect.init(x: point.x-4, y:point.y+130, width: 8, height: 8)
         lineShape1.path = linePath1.cgPath
         lineShape1.fillColor = UIColor.init(white: 0.7, alpha: 0.8).cgColor
-//        self.view.layer.addSublayer(lineShape1)
         return (lineShape, lineShape1)
     }
     
@@ -174,7 +178,7 @@ public extension CALayer {
     /// - parameter at: point location
     ///
     /// - returns: Color
-    func buttonPressed(at position: CGPoint) -> Bool {
+    func isLight(at position: CGPoint) -> Bool {
         
         // pixel of the given point
         var pixel = [UInt8](repeatElement(0, count: 4))
@@ -200,8 +204,9 @@ public extension CALayer {
 public extension UIColor {
     func isLight() -> Bool {
         guard let components = cgColor.components, components.count > 2 else {return false}
+        // w3.org/TR/AERT/#color-contrast
         let brightness = ((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1000
-        return (brightness > 0.6)
+        return (brightness > 0.85)
     }
 }
 
@@ -226,7 +231,7 @@ class ToastLabel: UILabel {
 
 extension UIViewController {
     static let DELAY_SHORT = 0.1
-    static let DELAY_LONG = 0.3
+    static let DELAY_LONG = 0.1
 
     func showToast(_ text: String, delay: TimeInterval = DELAY_LONG) {
         let label = ToastLabel()
