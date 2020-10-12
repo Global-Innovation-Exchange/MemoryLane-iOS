@@ -35,6 +35,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.white
         // connect Main Storyboard and create the button rect from scanAreaImage view
 //        let buttonRect: CGRect = scanAreaImage.frame
 //        regionOfInterest = buttonRect
@@ -187,7 +188,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
 //                    if !ViewController.buttonPressed {
                     self.shapeLayers[3-n].fillColor = self.buttonColors[3-n].cgColor
                     self.buttonPressed[3-n] = true
-//                        self.showToast(self.buttonNames[3-n] + " Button Pressed")
+                    if self.buttonPressed.filter({$0}).count == 1 {
+                        self.showToast(self.buttonNames[3-n] + " Button Pressed")
+                    }
 //                        print("Button Pressed")
 //                        print(3-n, picker)
 //                        print(ViewController.buttonPressed)
@@ -200,16 +203,17 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 }
             }
             if self.buttonPressed.allSatisfy({$0}) {
-                print("all true")
+                self.showToast("Setup Completed!")
+                _ = self.switchScreen
             }
         }
     }
     
     private func drawButtons(n: Int) {
         for i in 0...n-1 {
-            let circlePath = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: 100, height: 100))
+            let circlePath = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: 95, height: 95))
             let lineShape = CAShapeLayer()
-            lineShape.frame = CGRect.init(x: 140*(i+1), y:Int(HEIGHT)/5*4, width: 100, height: 100)
+            lineShape.frame = CGRect.init(x: 140*(i+1), y:Int(HEIGHT)/9*7-5, width: 95, height: 95)
             lineShape.lineWidth = 5
             lineShape.strokeColor = self.buttonColors[i].cgColor
             lineShape.path = circlePath.cgPath
@@ -240,6 +244,17 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             print(error.localizedDescription)
         }
     }
+    
+    private lazy var switchScreen: Void = {
+        let delayTime = DispatchTime.now() + 1.0
+        print("one")
+        DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            if let vc = mainStoryboard.instantiateViewController(withIdentifier: "ObjectScan") as? UIViewController {
+                self.present(vc, animated: true, completion: nil)
+            }
+        })
+    }()
 }
 
 public extension CALayer {
