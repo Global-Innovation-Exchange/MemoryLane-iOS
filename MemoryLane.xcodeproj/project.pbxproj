@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7054C3F0253430B2004D9ADD /* ObjectScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054C3EF253430B2004D9ADD /* ObjectScanViewController.swift */; };
+		7054C3FD25343B85004D9ADD /* ObjectScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054C3FC25343B85004D9ADD /* ObjectScan.swift */; };
+		7054C40225345A2E004D9ADD /* MemoryLaneMLModel 2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 7054C40125345A2E004D9ADD /* MemoryLaneMLModel 2.mlmodel */; };
 		705B2BFF252C05FF00DDC7B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2BFE252C05FF00DDC7B8 /* AppDelegate.swift */; };
 		705B2C01252C05FF00DDC7B8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C00252C05FF00DDC7B8 /* SceneDelegate.swift */; };
 		705B2C03252C05FF00DDC7B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C02252C05FF00DDC7B8 /* ViewController.swift */; };
@@ -35,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7054C3EF253430B2004D9ADD /* ObjectScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectScanViewController.swift; sourceTree = "<group>"; };
+		7054C3FC25343B85004D9ADD /* ObjectScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectScan.swift; sourceTree = "<group>"; };
+		7054C40125345A2E004D9ADD /* MemoryLaneMLModel 2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = "MemoryLaneMLModel 2.mlmodel"; path = "../../ML/Train/MemoryLaneMLModel 2.mlmodel"; sourceTree = "<group>"; };
 		705B2BFB252C05FF00DDC7B8 /* MemoryLane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryLane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		705B2BFE252C05FF00DDC7B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		705B2C00252C05FF00DDC7B8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,12 +106,15 @@
 			isa = PBXGroup;
 			children = (
 				705B2BFE252C05FF00DDC7B8 /* AppDelegate.swift */,
+				705B2C04252C05FF00DDC7B8 /* Main.storyboard */,
 				705B2C00252C05FF00DDC7B8 /* SceneDelegate.swift */,
 				705B2C02252C05FF00DDC7B8 /* ViewController.swift */,
-				705B2C04252C05FF00DDC7B8 /* Main.storyboard */,
 				705B2C07252C060200DDC7B8 /* Assets.xcassets */,
 				705B2C09252C060200DDC7B8 /* LaunchScreen.storyboard */,
 				705B2C0C252C060200DDC7B8 /* Info.plist */,
+				7054C40125345A2E004D9ADD /* MemoryLaneMLModel 2.mlmodel */,
+				7054C3EF253430B2004D9ADD /* ObjectScanViewController.swift */,
+				7054C3FC25343B85004D9ADD /* ObjectScan.swift */,
 			);
 			path = MemoryLane;
 			sourceTree = "<group>";
@@ -258,8 +267,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7054C3F0253430B2004D9ADD /* ObjectScanViewController.swift in Sources */,
+				7054C40225345A2E004D9ADD /* MemoryLaneMLModel 2.mlmodel in Sources */,
 				705B2C03252C05FF00DDC7B8 /* ViewController.swift in Sources */,
 				705B2BFF252C05FF00DDC7B8 /* AppDelegate.swift in Sources */,
+				7054C3FD25343B85004D9ADD /* ObjectScan.swift in Sources */,
 				705B2C01252C05FF00DDC7B8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +385,8 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -427,6 +441,8 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -446,7 +462,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gix.MemoryLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -465,7 +481,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gix.MemoryLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
