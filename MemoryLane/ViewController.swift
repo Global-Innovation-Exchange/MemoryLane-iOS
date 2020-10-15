@@ -35,15 +35,17 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.buttonPressed = [Bool](repeating: false, count: 4)
         self.view.backgroundColor = UIColor.white
-        // connect Main Storyboard and create the button rect from scanAreaImage view
-//        let buttonRect: CGRect = scanAreaImage.frame
-//        regionOfInterest = buttonRect
         // set up camera, camera feed, camera output
         self.setCameraInput()
         self.showCameraFeed()
         self.drawButtons(n: 4)
         self.setCameraOutput()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.buttonPressed = [Bool](repeating: false, count: 4)
     }
     
     override func viewDidLayoutSubviews() {
@@ -204,7 +206,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             }
             if self.buttonPressed.allSatisfy({$0}) {
                 self.showToast("Setup Completed!")
-                _ = self.switchScreen
+                self.switchScreen()
+                
+//                _ = self.switchScreen
             }
         }
     }
@@ -245,16 +249,24 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    private lazy var switchScreen: Void = {
+//    private lazy var switchScreen: Void = {
+//        let delayTime = DispatchTime.now() + 1.0
+//        DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
+//            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//            if let vc = mainStoryboard.instantiateViewController(withIdentifier: "ObjectScan") as? UIViewController {
+//                self.present(vc, animated: true, completion: nil)
+//            }
+//        })
+//    }()
+    private func switchScreen() {
         let delayTime = DispatchTime.now() + 1.0
-        print("one")
         DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             if let vc = mainStoryboard.instantiateViewController(withIdentifier: "ObjectScan") as? UIViewController {
                 self.present(vc, animated: true, completion: nil)
             }
         })
-    }()
+    }
 }
 
 public extension CALayer {
