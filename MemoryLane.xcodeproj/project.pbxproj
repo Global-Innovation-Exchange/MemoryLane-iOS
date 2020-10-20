@@ -18,6 +18,11 @@
 		705B2C0B252C060200DDC7B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 705B2C09252C060200DDC7B8 /* LaunchScreen.storyboard */; };
 		705B2C16252C060300DDC7B8 /* MemoryLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C15252C060300DDC7B8 /* MemoryLaneTests.swift */; };
 		705B2C21252C060300DDC7B8 /* MemoryLaneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C20252C060300DDC7B8 /* MemoryLaneUITests.swift */; };
+		70C4EB86253EB5B400799355 /* Double+roundToDecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4EB85253EB5B400799355 /* Double+roundToDecimal.swift */; };
+		70F2BE74253EB6D300A3B959 /* CALayer+isLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F2BE73253EB6D300A3B959 /* CALayer+isLight.swift */; };
+		70F2BE79253EBAE900A3B959 /* UIImage+withAlphaComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F2BE78253EBAE900A3B959 /* UIImage+withAlphaComponent.swift */; };
+		70F2BE7E253EBB8700A3B959 /* UIColor+isLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F2BE7D253EBB8700A3B959 /* UIColor+isLight.swift */; };
+		70F2BE83253EBBB900A3B959 /* UIViewController+showToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F2BE82253EBBB900A3B959 /* UIViewController+showToast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +60,11 @@
 		705B2C1C252C060300DDC7B8 /* MemoryLaneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemoryLaneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		705B2C20252C060300DDC7B8 /* MemoryLaneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLaneUITests.swift; sourceTree = "<group>"; };
 		705B2C22252C060300DDC7B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70C4EB85253EB5B400799355 /* Double+roundToDecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+roundToDecimal.swift"; sourceTree = "<group>"; };
+		70F2BE73253EB6D300A3B959 /* CALayer+isLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+isLight.swift"; sourceTree = "<group>"; };
+		70F2BE78253EBAE900A3B959 /* UIImage+withAlphaComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+withAlphaComponent.swift"; sourceTree = "<group>"; };
+		70F2BE7D253EBB8700A3B959 /* UIColor+isLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIColor+isLight.swift"; path = "MemoryLane/UIColor+isLight.swift"; sourceTree = SOURCE_ROOT; };
+		70F2BE82253EBBB900A3B959 /* UIViewController+showToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIViewController+showToast.swift"; path = "MemoryLane/UIViewController+showToast.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +115,7 @@
 		705B2BFD252C05FF00DDC7B8 /* MemoryLane */ = {
 			isa = PBXGroup;
 			children = (
+				70C4EB84253EB4FC00799355 /* Extensions */,
 				705B2BFE252C05FF00DDC7B8 /* AppDelegate.swift */,
 				705B2C04252C05FF00DDC7B8 /* Main.storyboard */,
 				705B2C00252C05FF00DDC7B8 /* SceneDelegate.swift */,
@@ -135,6 +146,18 @@
 				705B2C22252C060300DDC7B8 /* Info.plist */,
 			);
 			path = MemoryLaneUITests;
+			sourceTree = "<group>";
+		};
+		70C4EB84253EB4FC00799355 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				70F2BE82253EBBB900A3B959 /* UIViewController+showToast.swift */,
+				70F2BE7D253EBB8700A3B959 /* UIColor+isLight.swift */,
+				70C4EB85253EB5B400799355 /* Double+roundToDecimal.swift */,
+				70F2BE73253EB6D300A3B959 /* CALayer+isLight.swift */,
+				70F2BE78253EBAE900A3B959 /* UIImage+withAlphaComponent.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,11 +290,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70F2BE74253EB6D300A3B959 /* CALayer+isLight.swift in Sources */,
 				7054C3F0253430B2004D9ADD /* ObjectScanViewController.swift in Sources */,
+				70F2BE7E253EBB8700A3B959 /* UIColor+isLight.swift in Sources */,
 				705B2C03252C05FF00DDC7B8 /* ViewController.swift in Sources */,
 				705B2BFF252C05FF00DDC7B8 /* AppDelegate.swift in Sources */,
 				7054C3FD25343B85004D9ADD /* ObjectScan.swift in Sources */,
 				7054C40F253828F8004D9ADD /* MemoryLaneMLModel 2.mlmodel in Sources */,
+				70C4EB86253EB5B400799355 /* Double+roundToDecimal.swift in Sources */,
+				70F2BE83253EBBB900A3B959 /* UIViewController+showToast.swift in Sources */,
+				70F2BE79253EBAE900A3B959 /* UIImage+withAlphaComponent.swift in Sources */,
 				705B2C01252C05FF00DDC7B8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
