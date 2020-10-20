@@ -8,6 +8,8 @@
 import UIKit
 import AVFoundation
 import Vision
+import CoreMotion
+import CoreLocation
 
 let WIDTH = UIScreen.main.bounds.width
 let HEIGHT = UIScreen.main.bounds.height
@@ -15,6 +17,8 @@ let BRIGHTNESS_THRESHOLD: CGFloat = 0.5
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    @IBOutlet weak var instructionTextLabel: UILabel!
+    @IBOutlet weak var instructionImageView: UIImageView!
     private let captureSession = AVCaptureSession()
     private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
     private let videoDataOutput = AVCaptureVideoDataOutput()
@@ -33,15 +37,18 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     let buttonColors = [UIColor.green, UIColor.red, UIColor.yellow, UIColor.blue]
     let buttonNames = ["Like", "Repeat", "Next", "Play/Pause"]
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.buttonPressed = [Bool](repeating: false, count: 4)
         self.view.backgroundColor = UIColor.white
+        self.iPadAngleValidation()
         // set up camera, camera feed, camera output
         self.setCameraInput()
         self.showCameraFeed()
         self.drawButtons(n: 4)
         self.setCameraOutput()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +89,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     private func showCameraFeed() {
         self.previewLayer.videoGravity = .resizeAspect
-//        self.view.layer.addSublayer(self.previewLayer)
+        self.view.layer.addSublayer(self.previewLayer)
 //        self.previewLayer.frame = self.view.frame
         self.previewLayer.frame = CGRect(x: 0, y: 0, width: 810, height: 150)
     }
@@ -123,62 +130,12 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         guard let buttonImage = buttonAreaContext.makeImage() else {
             return
         }
-        self.detectRectangleByBrightness(in: buttonImage)
-//        self.detectRectangle(in: buttonImage)
-    }
-    
-    private func detectRectangle(in image: CGImage) {
-        let request = VNDetectRectanglesRequest(completionHandler: { (request: VNRequest, error: Error?) in
-            DispatchQueue.main.async {
-                self.previewLayer.contents = image
-                guard let results = request.results as? [VNRectangleObservation] else { return }
-                self.removeBoundingBoxLayer()
-                //retrieve the first observed rectangle
-                guard let rect = results.first else{return}
-                //function used to draw the bounding box of the detected rectangle
-                self.drawBoundingBox(rect: rect)
-            }
-        })
-        //Set the value for the detected rectangle
-//        request.minimumAspectRatio = VNAspectRatio(0.2)
-        request.maximumAspectRatio = VNAspectRatio(0.9)
-        request.quadratureTolerance = 20
-        request.minimumSize = Float(0.2)
-        request.maximumObservations = 1
-        request.minimumConfidence = 0.7
-        let imageRequestHandler = VNImageRequestHandler(cgImage: image, options: [:])
-        try? imageRequestHandler.perform([request])
-    }
-    
-    func drawBoundingBox(rect : VNRectangleObservation) {
-        // mirror layer
-        let transform = CGAffineTransform(scaleX: -1, y: -1)
-            .translatedBy(x: -self.previewLayer.bounds.width,
-                          y: -220)
-        let scale = CGAffineTransform.identity
-            .scaledBy(x: self.previewLayer.bounds.width,
-                      y: 220)
-        let bounds = rect.boundingBox
-            .applying(scale).applying(transform)
-        createLayer(in: bounds)
-        print("draw rect", rect.boundingBox.maxX)
+        if self.ipadValidated {
+            self.detectRectangleByBrightness(in: buttonImage)
+        }
     }
     
     private var bBoxLayer = CAShapeLayer()
-    
-    private func createLayer(in rect: CGRect) {
-        bBoxLayer = CAShapeLayer()
-        bBoxLayer.frame = rect
-        bBoxLayer.cornerRadius = 10
-        bBoxLayer.opacity = 1
-        bBoxLayer.borderColor = UIColor.systemGreen.cgColor
-        bBoxLayer.borderWidth = 6.0
-        previewLayer.insertSublayer(bBoxLayer, at: 1)
-    }
-    
-    func removeBoundingBoxLayer() {
-        bBoxLayer.removeFromSuperlayer()
-    }
     
     private func detectRectangleByBrightness(in image: CGImage) {
         DispatchQueue.main.async {
@@ -206,7 +163,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             }
             if self.buttonPressed.allSatisfy({$0}) {
                 self.showToast("Setup Completed!")
-                self.switchScreen()
+//                self.switchScreen()
                 
 //                _ = self.switchScreen
             }
@@ -249,15 +206,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-//    private lazy var switchScreen: Void = {
-//        let delayTime = DispatchTime.now() + 1.0
-//        DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
-//            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//            if let vc = mainStoryboard.instantiateViewController(withIdentifier: "ObjectScan") as? UIViewController {
-//                self.present(vc, animated: true, completion: nil)
-//            }
-//        })
-//    }()
     private func switchScreen() {
         let delayTime = DispatchTime.now() + 1.0
         DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
@@ -266,6 +214,83 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 self.present(vc, animated: true, completion: nil)
             }
         })
+    }
+    
+
+    // MotionManager
+    let motionManager = CMMotionManager()
+    // After iPad correctly placed, wait 1s to proceed
+    let validateDelay = 1.0
+    let updateInterval = 0.1
+    var ipadValidated = false
+    func iPadAngleValidation() {
+        var timer = 0.0
+        if motionManager.isDeviceMotionAvailable {
+            motionManager.deviceMotionUpdateInterval = updateInterval
+            motionManager.startDeviceMotionUpdates(to: OperationQueue.main) {
+                (data, error) in
+                if let data = data {
+                    let pitch = data.attitude.pitch * (180.0 / .pi)
+                    // pitch angle range
+                    if 66..<69 ~= pitch {
+                        if timer.roundToDecimal(1) < self.validateDelay {
+                            timer += self.updateInterval
+                        } else if timer.roundToDecimal(1) == self.validateDelay {
+                            if !self.ipadValidated {
+                                self.ipadValidated = true
+                                print("Placed correctly")
+                                self.instructionTextLabel.text = "Attach Reflector"
+                                self.reflectorValidation()
+                            }
+                        }
+                    } else {
+                        // reset timer
+                        timer = 0.0
+                        if self.ipadValidated {
+                            self.ipadValidated = false
+                            print("Place iPad on stand")
+                            self.instructionTextLabel.text = "Place the iPad on the stand"
+                            self.instructionImageView.image = nil
+                            self.instructionImageView.center.y -= 40
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func reflectorValidation() {
+        let reflectorImage = UIImage(named: "reflector.png")
+        UIView.transition(with: self.instructionImageView,
+                          duration: 0.5,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                              self.instructionImageView.image = reflectorImage
+                          },
+                          completion: nil)
+        UIView.animate(withDuration: 2,
+                       delay: 0.5,
+                       options: .repeat,
+                       animations: {
+                            self.instructionImageView.center.y += 40
+                       }, completion: nil)
+    }
+}
+
+extension UIImage {
+  func withAlphaComponent(_ alpha: CGFloat) -> UIImage? {
+    UIGraphicsBeginImageContextWithOptions(size, false, scale)
+    defer { UIGraphicsEndImageContext() }
+
+    draw(at: .zero, blendMode: .normal, alpha: alpha)
+    return UIGraphicsGetImageFromCurrentImageContext()
+  }
+}
+
+extension Double {
+    func roundToDecimal(_ fractionDigits: Int) -> Double {
+        let multiplier = pow(10, Double(fractionDigits))
+        return Darwin.round(self * multiplier) / multiplier
     }
 }
 
