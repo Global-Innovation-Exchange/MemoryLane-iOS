@@ -18,7 +18,9 @@ let BRIGHTNESS_THRESHOLD: CGFloat = 0.5
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     @IBOutlet weak var instructionTextLabel: UILabel!
-    @IBOutlet weak var instructionImageView: UIImageView!
+    @IBOutlet weak var reflectorImageView: UIImageView!
+    @IBOutlet weak var iPadImageView: UIImageView!
+    
     private let captureSession = AVCaptureSession()
     private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
     private let videoDataOutput = AVCaptureVideoDataOutput()
@@ -33,6 +35,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         CGPoint(x: WIDTH/3*2, y: 60),
         CGPoint(x: WIDTH-5, y: 60),
     ]
+    let speechSynthesizer = AVSpeechSynthesizer()
     
     let buttonColors = [UIColor.green, UIColor.red, UIColor.yellow, UIColor.blue]
     let buttonNames = ["Like", "Repeat", "Next", "Play/Pause"]
@@ -48,7 +51,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         self.showCameraFeed()
         self.drawButtons(n: 4)
         self.setCameraOutput()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -184,8 +186,11 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    func playSound() {
-        guard let url = Bundle.main.url(forResource: "soundName", withExtension: "mp3") else { return }
+    func playSound(){
+        guard let url = Bundle.main.url(forResource: "CorrectSound", withExtension: "mp3") else {
+            print("Sound file is missing")
+            return
+        }
 
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
@@ -197,12 +202,15 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             /* iOS 10 and earlier require the following line:
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
 
-            guard let player = player else { return }
-
+            guard let player = player else {
+                print("Player is missing")
+                return
+            }
             player.play()
-
-        } catch let error {
-            print(error.localizedDescription)
+            
+        } catch let err {
+            print(err)
+            return
         }
     }
     
@@ -222,6 +230,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     var ipadValidated = false
     
     func iPadAngleValidation() {
+        self.speak(text: self.instructionTextLabel.text!)
+        
         // After iPad correctly placed, wait 1s to proceed
         let validateDelay = 1.0
         let updateInterval = 0.1
@@ -240,9 +250,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                         } else if timer.roundToDecimal(1) == validateDelay {
                             if !self.ipadValidated {
                                 self.ipadValidated = true
-                                print("Placed correctly")
-                                self.instructionTextLabel.text = "Attach Reflector"
-                                self.reflectorValidation()
+                                self.playSound()
+                                self.iPadImageView.image = UIImage(named: "CorrectIcon.png")
+                                self.perform(#selector(self.reflectorValidation), with: nil, afterDelay: 1.0)
                             }
                         }
                     } else {
@@ -252,8 +262,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                             self.ipadValidated = false
                             print("Place iPad on stand")
                             self.instructionTextLabel.text = "Place the iPad on the stand"
-                            self.instructionImageView.image = nil
-                            self.instructionImageView.center.y -= 40
+                            self.reflectorImageView.image = nil
+                            self.reflectorImageView.center.y -= 40
+                            self.speak(text: self.instructionTextLabel.text!)
                         }
                     }
                 }
@@ -261,20 +272,51 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    func reflectorValidation() {
+    @objc func reflectorValidation() {
         let reflectorImage = UIImage(named: "reflector.png")
-        UIView.transition(with: self.instructionImageView,
+        self.iPadImageView.image = UIImage(named: "placeiPad.png")
+        self.instructionTextLabel.text = "Then attach the black reflector"
+        self.speak(text: self.instructionTextLabel.text!)
+        UIView.transition(with: self.reflectorImageView,
                           duration: 0.5,
                           options: .transitionCrossDissolve,
                           animations: {
-                              self.instructionImageView.image = reflectorImage
+                              self.reflectorImageView.image = reflectorImage
                           },
                           completion: nil)
         UIView.animate(withDuration: 2,
                        delay: 0.5,
                        options: .repeat,
                        animations: {
-                            self.instructionImageView.center.y += 40
+                            self.reflectorImageView.center.y += 40
                        }, completion: nil)
     }
+    
+    func speak(text: String) {
+        let speechUtterance = AVSpeechUtterance(string: self.instructionTextLabel.text!)
+//        speechUtterance.voice = AVSpeechSynthesisVoice(language: AVSpeechSynthesisVoice.currentLanguageCode())
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.5
+        speechUtterance.pitchMultiplier = 1.2
+        self.speechSynthesizer.speak(speechUtterance)
+        
+    }
 }
+
+//class Label: UILabel {
+//    var speechSynthesizer = AVSpeechSynthesizer()
+//    var speechUtterance: AVSpeechUtterance = AVSpeechUtterance(string: "Please follow the instruction to setup the device")
+//
+//    override var text: String? {
+//        didSet {
+//            if let text = text {
+//                if oldValue != text {
+//                    speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.0
+//                    speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+//                    speechUtterance = AVSpeechUtterance(string: text)
+//                    speechSynthesizer.speak(speechUtterance)
+//                }
+//            }
+//        }
+//    }
+//}
