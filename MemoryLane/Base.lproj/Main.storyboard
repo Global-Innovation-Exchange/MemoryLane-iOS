@@ -35,11 +35,19 @@
                                 <rect key="frame" x="377" y="370" width="56" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Degree" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkx-kH-qLu">
+                                <rect key="frame" x="694" y="1003" width="96" height="57"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="angleLabel" destination="wkx-kH-qLu" id="CLg-vd-I2O"/>
                         <outlet property="iPadImageView" destination="luv-qK-lZP" id="0lI-QO-yPd"/>
                         <outlet property="instructionTextLabel" destination="ldB-pf-uEo" id="YO6-TA-wBq"/>
                         <outlet property="reflectorImageView" destination="XkK-ie-z7W" id="VUe-M3-KEW"/>

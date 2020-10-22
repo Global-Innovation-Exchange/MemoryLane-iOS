@@ -20,6 +20,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     @IBOutlet weak var instructionTextLabel: UILabel!
     @IBOutlet weak var reflectorImageView: UIImageView!
     @IBOutlet weak var iPadImageView: UIImageView!
+    @IBOutlet weak var angleLabel: UILabel!
     
     private let captureSession = AVCaptureSession()
     private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
@@ -118,22 +119,31 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             return
         }
         let width = CVPixelBufferGetWidthOfPlane(imageBuffer, 0)
-//        let height = CVPixelBufferGetHeightOfPlane(imageBuffer, 0)
+        let height = CVPixelBufferGetHeightOfPlane(imageBuffer, 0)
         let bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, 0)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bimapInfo: CGBitmapInfo = [
             .byteOrder32Little,
             CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue)]
+        
+        // get button area
         let startPos = 130 * bytesPerRow
         guard let buttonAreaContext = CGContext(data: baseAddr + startPos, width: width, height: 80, bitsPerComponent: 8, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bimapInfo.rawValue) else {
             return
         }
+        guard let buttonAreaImage = buttonAreaContext.makeImage() else {
+            return
+        }
         
-        guard let buttonImage = buttonAreaContext.makeImage() else {
+        // get object scan area
+        guard let objectAreaContext = CGContext(data: baseAddr + startPos + 80, width: width, height: height, bitsPerComponent: 8, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bimapInfo.rawValue) else {
+            return
+        }
+        guard let objectAreaImage = objectAreaContext.makeImage() else {
             return
         }
         if self.ipadValidated {
-            self.detectRectangleByBrightness(in: buttonImage)
+            self.detectRectangleByBrightness(in: buttonAreaImage)
         }
     }
     
@@ -177,8 +187,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             let circlePath = UIBezierPath.init(ovalIn: CGRect.init(x: 0, y: 0, width: 95, height: 95))
             let lineShape = CAShapeLayer()
             lineShape.frame = CGRect.init(x: 140*(i+1), y:Int(HEIGHT)/9*7-5, width: 95, height: 95)
-            lineShape.lineWidth = 5
-            lineShape.strokeColor = self.buttonColors[i].cgColor
+//            lineShape.lineWidth = 1
+//            lineShape.strokeColor = self.buttonColors[i].cgColor
             lineShape.path = circlePath.cgPath
             lineShape.fillColor = UIColor.clear.cgColor
             view.layer.addSublayer(lineShape)
@@ -228,6 +238,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     // MotionManager
     let motionManager = CMMotionManager()
     var ipadValidated = false
+    var reflectorValidated = false
     
     func iPadAngleValidation() {
         self.speak(text: self.instructionTextLabel.text!)
@@ -243,15 +254,16 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 (data, error) in
                 if let data = data {
                     let pitch = data.attitude.pitch * (180.0 / .pi)
+                    self.angleLabel.text = String(format: "%.1f°", pitch)
                     // pitch angle range
-                    if 66..<69 ~= pitch {
+                    if 71..<75 ~= pitch {
                         if timer.roundToDecimal(1) < validateDelay {
                             timer += updateInterval
                         } else if timer.roundToDecimal(1) == validateDelay {
                             if !self.ipadValidated {
                                 self.ipadValidated = true
                                 self.playSound()
-                                self.iPadImageView.image = UIImage(named: "CorrectIcon.png")
+                                self.updateImage(view: self.iPadImageView, image: UIImage(named: "CorrectIcon.png")!, time: 0.5)
                                 self.perform(#selector(self.reflectorValidation), with: nil, afterDelay: 1.0)
                             }
                         }
@@ -273,17 +285,12 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     @objc func reflectorValidation() {
-        let reflectorImage = UIImage(named: "reflector.png")
-        self.iPadImageView.image = UIImage(named: "placeiPad.png")
+        let reflectorImage = UIImage(named: "reflector.png")!
+//        self.iPadImageView.image = UIImage(named: "placeiPad.png")
+        self.updateImage(view: self.iPadImageView, image: UIImage(named: "placeiPad.png")!, time: 0.5)
         self.instructionTextLabel.text = "Then attach the black reflector"
         self.speak(text: self.instructionTextLabel.text!)
-        UIView.transition(with: self.reflectorImageView,
-                          duration: 0.5,
-                          options: .transitionCrossDissolve,
-                          animations: {
-                              self.reflectorImageView.image = reflectorImage
-                          },
-                          completion: nil)
+        self.updateImage(view: self.reflectorImageView, image: reflectorImage, time: 0.5)
         UIView.animate(withDuration: 2,
                        delay: 0.5,
                        options: .repeat,
@@ -292,12 +299,22 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                        }, completion: nil)
     }
     
+    func updateImage(view: UIImageView, image: UIImage, time: Double) {
+        UIView.transition(with: view,
+                          duration: time,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                              view.image = image
+                          },
+                          completion: nil)
+    }
+    
     func speak(text: String) {
         let speechUtterance = AVSpeechUtterance(string: self.instructionTextLabel.text!)
-//        speechUtterance.voice = AVSpeechSynthesisVoice(language: AVSpeechSynthesisVoice.currentLanguageCode())
-        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: AVSpeechSynthesisVoice.currentLanguageCode())
+//        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
         speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.5
-        speechUtterance.pitchMultiplier = 1.2
+        speechUtterance.pitchMultiplier = 0.8
         self.speechSynthesizer.speak(speechUtterance)
         
     }
