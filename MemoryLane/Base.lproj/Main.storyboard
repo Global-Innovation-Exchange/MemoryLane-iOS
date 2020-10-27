@@ -11,6 +11,9 @@
         <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
         </array>
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
         <array key="Roboto-Regular.ttf">
             <string>Roboto-Regular</string>
         </array>
@@ -58,7 +61,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" fixedFrame="YES" restorationIdentifier="reflector" image="reflector" translatesAutoresizingMaskIntoConstraints="NO" id="XkK-ie-z7W">
-                                <rect key="frame" x="462" y="440" width="65" height="38"/>
+                                <rect key="frame" x="462" y="438" width="65" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" fixedFrame="YES" image="CorrectIcon" translatesAutoresizingMaskIntoConstraints="NO" id="AbW-Qd-S9i">
@@ -121,28 +124,35 @@
             </objects>
             <point key="canvasLocation" x="2293" y="135"/>
         </scene>
-        <!--AV Player View Controller-->
-        <scene sceneID="Wkm-rU-EJc">
-            <objects>
-                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="QOs-C2-Xrk" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rkf-8R-i3c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="293" y="877"/>
-        </scene>
-        <!--View Controller-->
+        <!--Intro View Controller-->
         <scene sceneID="oWk-qb-24U">
             <objects>
-                <viewController storyboardIdentifier="Intro" id="KQL-UG-dCu" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Intro" id="KQL-UG-dCu" customClass="IntroViewController" customModule="MemoryLane" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oNy-62-HHx">
                         <rect key="frame" x="0.0" y="0.0" width="810" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headnotch" translatesAutoresizingMaskIntoConstraints="NO" id="SQe-xv-eaB">
+                                <rect key="frame" x="0.0" y="0.0" width="810" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A2x-gU-8VM">
+                                <rect key="frame" x="81" y="116" width="643" height="378"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">Hello, Let’s enjoy music and movies that will bring you great memories to share and talk about. Push the Next button on the box to start
+</string>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="35"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="bue-Vx-Oty"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3S-k7-uUH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="858" y="135"/>
+            <point key="canvasLocation" x="857.77777777777771" y="135"/>
         </scene>
     </scenes>
     <resources>

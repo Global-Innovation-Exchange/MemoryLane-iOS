@@ -27,10 +27,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     @IBOutlet weak var angleLabel: UILabel!
     
     private let captureSession = AVCaptureSession()
-    private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+    lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
     private let videoDataOutput = AVCaptureVideoDataOutput()
     var totalFrameCount = 0
-    var shapeLayers = [CAShapeLayer]()
+//    var shapeLayers = [CAShapeLayer]()
     var player: AVAudioPlayer?
     // color picker point
     var pickers = [
@@ -41,20 +41,18 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     ]
     let speechSynthesizer = AVSpeechSynthesizer()
     
-    let buttonColors = [UIColor.green, UIColor.red, UIColor.yellow, UIColor.blue]
     let buttonNames = ["Like", "Repeat", "Next", "Play/Pause"]
-    
+    let buttons = Buttons()
     // Global Bool for validation state
     var iPadValidated = false
     var reflectorValidated = false
-    var buttonPressed = [Bool](repeating: false, count: 4)
+//    static var buttonPressed = [Bool](repeating: false, count: 4)
     var allValidationPassed = false
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.buttonPressed = [Bool](repeating: false, count: 4)
         self.view.backgroundColor = UIColor.white
+//        ViewController.buttonPressed = [Bool](repeating: false, count: 4)
         self.iPadAngleValidation()
         // set up camera, camera feed, camera output
         self.setCameraInput()
@@ -63,10 +61,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         self.setCameraOutput()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.buttonPressed = [Bool](repeating: false, count: 4)
-    }
-    
+//    override func viewWillAppear(_ animated: Bool) {
+//        ViewController.buttonPressed = [Bool](repeating: false, count: 4)
+//    }
+//
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 //        self.previewLayer.frame = self.view.bounds
@@ -81,7 +79,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     override func viewDidDisappear(_ animated: Bool) {
         //session Stopped
-        self.videoDataOutput.setSampleBufferDelegate(nil, queue: nil)
+//        self.videoDataOutput.setSampleBufferDelegate(nil, queue: nil)
 //        self.captureSession.stopRunning()
     }
     
@@ -95,7 +93,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 position: .front).devices.first else {
             fatalError("No front camera device found.")
         }
-        print(device.exposureMode.rawValue)
         let cameraInput = try! AVCaptureDeviceInput(device: device)
         self.captureSession.addInput(cameraInput)
     }
@@ -178,22 +175,25 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
 //        }
     }
     
-    private func buttonDetection(in image: CGImage) {
+    func buttonDetection(in image: CGImage) {
         DispatchQueue.main.async {
             self.previewLayer.contents = image
             for (n, picker) in self.pickers.enumerated() {
                 if self.previewLayer.isLight(at: picker) {
-//                    self.shapeLayers[3-n].fillColor = self.buttonColors[3-n].cgColor
-                    self.buttonPressed[3-n] = true
-                    if self.buttonPressed.filter({$0}).count == 1 {
-                        self.showToast(self.buttonNames[3-n] + " Button Pressed")
-                    }
+                    self.buttons.press(i: 3-n)
+                    self.showToast(self.buttonNames[3-n] + " Button Pressed")
+//                    ViewController.buttonPressed[3-n] = true
+//                    if ViewController.buttonPressed.filter({$0}).count == 1 {
+//                        self.showToast(self.buttonNames[3-n] + " Button Pressed")
+//                    }
                 } else {
-//                    self.shapeLayers[3-n].fillColor = UIColor.clear.cgColor
-                    self.buttonPressed[3-n] = false
+//                    ViewController.buttonPressed[3-n] = false
+                    self.buttons.release(i: 3-n)
                 }
             }
-            if self.buttonPressed.allSatisfy({$0}) {
+//            print(self.buttonPressed)
+//            if ViewController.buttonPressed.allSatisfy({$0}) {
+            if self.buttons.allPressed() {
                 // only execute following statement once after four button pressed
                 if !self.allValidationPassed {
                     self.allValidationPassed = true
@@ -208,8 +208,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                     self.switchScreen()
                 }
                 self.showToast("Setup Completed!")
-            } else {
-                self.allValidationPassed = false
             }
         }
     }
@@ -260,6 +258,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             if let vc = mainStoryboard.instantiateViewController(withIdentifier: "Intro") as? IntroViewController {
+                vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true, completion: nil)
             }
         })
@@ -368,7 +367,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                        }, completion: nil)
     }
     
-    var validationDelay = 90
+    var validationDelay = 60
     var reflectorValidationTimer = 0
     private func reflectorValidation(in image: CGImage) {
 //        print("slot detection")

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		703D6AE92546BEDC004B7219 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D6AE82546BEDC004B7219 /* Buttons.swift */; };
 		7054C3F0253430B2004D9ADD /* ObjectScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054C3EF253430B2004D9ADD /* ObjectScanViewController.swift */; };
 		7054C3FD25343B85004D9ADD /* ObjectScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054C3FC25343B85004D9ADD /* ObjectScan.swift */; };
 		7054C40F253828F8004D9ADD /* MemoryLaneMLModel 2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 7054C40E253828F8004D9ADD /* MemoryLaneMLModel 2.mlmodel */; };
@@ -72,6 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		703D6AE82546BEDC004B7219 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		7054C3EF253430B2004D9ADD /* ObjectScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectScanViewController.swift; sourceTree = "<group>"; };
 		7054C3FC25343B85004D9ADD /* ObjectScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectScan.swift; sourceTree = "<group>"; };
 		7054C40E253828F8004D9ADD /* MemoryLaneMLModel 2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = "MemoryLaneMLModel 2.mlmodel"; path = "MemoryLane/MemoryLaneMLModel 2.mlmodel"; sourceTree = SOURCE_ROOT; };
@@ -174,6 +176,7 @@
 				7054C3EF253430B2004D9ADD /* ObjectScanViewController.swift */,
 				7054C3FC25343B85004D9ADD /* ObjectScan.swift */,
 				70F63F522546A15A00D6AC21 /* IntroViewController.swift */,
+				703D6AE82546BEDC004B7219 /* Buttons.swift */,
 			);
 			path = MemoryLane;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				70F2BE79253EBAE900A3B959 /* UIImage+withAlphaComponent.swift in Sources */,
 				70DEF5EB2541253B00CF91E1 /* CGImage+isDark.swift in Sources */,
 				705B2C01252C05FF00DDC7B8 /* SceneDelegate.swift in Sources */,
+				703D6AE92546BEDC004B7219 /* Buttons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
