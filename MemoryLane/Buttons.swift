@@ -15,7 +15,11 @@ class Buttons: NSObject {
                 // only record the last pressed button
                 let lastPressedButton = zip(buttonsPressed, oldValue).map {$0.0 != $0.1}
                 let lastPressedButtonIndex = lastPressedButton.firstIndex{$0}
-                NotificationCenter.default.post(name: Notification.Name("Button Pressed"), object: lastPressedButtonIndex)
+                // If it is press not release, play sound
+                if buttonsPressed.filter({$0}).count > oldValue.filter({$0}).count {
+                    Helper.playSound(filename: "ButtonClickSound")
+                    NotificationCenter.default.post(name: Notification.Name("Button Pressed"), object: lastPressedButtonIndex)
+                }
             }
         }
     }

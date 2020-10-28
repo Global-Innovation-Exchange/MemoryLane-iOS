@@ -13,6 +13,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let pageControl = UIPageControl.appearance()
+        // Color Literal
+        pageControl.currentPageIndicatorTintColor = #colorLiteral(red: 0.4358717203, green: 0.5370141268, blue: 0.8963852525, alpha: 1)
+        pageControl.pageIndicatorTintColor = .gray
         return true
     }
 
