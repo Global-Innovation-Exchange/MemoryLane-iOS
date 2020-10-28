@@ -23,7 +23,6 @@ class DataViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Data View Index ", index)
         displayLabel.text = displayText
         animationView.center.x = centerX ?? 300.5
         animationView.center.y = centerY ?? 670.5

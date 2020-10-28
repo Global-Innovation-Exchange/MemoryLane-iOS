@@ -15,7 +15,7 @@ class IntroViewController: UIViewController {
         ["display": "Always press the \"Like\" when you enjoy the content, this can also help us understand your taste. \n\nPress the \"Like\" button to proceed", "centerX": CGFloat(298), "centerY": CGFloat(687.5)],
         ["display": "To play the content again, you can press the \"Repeat\" button.  \n\nPress \"Repeat\" button to proceed", "centerX": CGFloat(328), "centerY": CGFloat(697.5)],
         ["display": "The \"Next\" button can help you skip to the next song/video. \n\nPress \"Next\" button to proceed", "centerX": CGFloat(358), "centerY": CGFloat(707.5)],
-        ["display": "Use the \"Play\\Pause\" button to control the media playing. \n\nPress \"Play\\Pause\" button to proceed", "centerX": CGFloat(388), "centerY": CGFloat(717.5)]
+        ["display": "Use the \"Play/Pause\" button to control the media playing. \n\nPress \"Play/Pause\" button to proceed", "centerX": CGFloat(388), "centerY": CGFloat(717.5)]
     ]
     
     var currentViewControllerIndex = 0
@@ -56,8 +56,6 @@ class IntroViewController: UIViewController {
     }
     
     func detailViewControllerAt(index: Int) -> DataViewController? {
-        
-        print("True Index ", index)
         if index >= dataSource.count || dataSource.count == 0 {
             return nil
         }

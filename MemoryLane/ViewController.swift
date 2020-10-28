@@ -44,25 +44,35 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     // Global Bool for validation state
     var iPadValidated = false
     var reflectorValidated = false
-//    static var buttonPressed = [Bool](repeating: false, count: 4)
     var allValidationPassed = false
+    
+    let themeObjects = ThemeObjects()
+    var objectDetectionStart = false
+    private var objectDetectionRequests = [VNRequest]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-//        ViewController.buttonPressed = [Bool](repeating: false, count: 4)
+        // iPad Placement Validation -> reflector Validation
         self.iPadAngleValidation()
         // set up camera, camera feed, camera output
         self.setCameraInput()
         self.showCameraFeed()
-//        self.drawButtons(n: 4)
         self.setCameraOutput()
+        // Load ML model and prepare the request
+        self.setupObjectDetection()
+        // A notification will post after validation and introduction
+        // Start object detection request once the notification is received
+        NotificationCenter.default.addObserver(self, selector: #selector(handleObjectDetectionStart), name: Notification.Name("Object Detection Start"), object: nil)
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        ViewController.buttonPressed = [Bool](repeating: false, count: 4)
-//    }
-//
+    @objc func handleObjectDetectionStart(_ notification: NSNotification) {
+        // set this boolean so the object detection request will be performed in captureOutput function
+        self.objectDetectionStart = true
+        // remove this observer
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("Object Detection Start"), object: nil)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 //        self.previewLayer.frame = self.view.bounds
@@ -154,6 +164,15 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         if self.iPadValidated && self.reflectorValidated {
             self.buttonDetection(in: buttonAreaImage)
 //            self.lightingCalibration(in: buttonAreaImage)
+        }
+        if self.objectDetectionStart {
+            // Object detection
+            let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: imageBuffer, options: [:])
+            do {
+                try imageRequestHandler.perform(self.objectDetectionRequests)
+            } catch {
+                print(error)
+            }
         }
     }
 
@@ -359,6 +378,51 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         let imageRequestHandler = VNImageRequestHandler(cgImage: image, options: [:])
         try? imageRequestHandler.perform([request])
     }
+    
+    // Object Detection Vision
+    @discardableResult
+    func setupObjectDetection() -> NSError? {
+        // Setup Vision parts
+        let error: NSError! = nil
+        
+        guard let modelURL = Bundle.main.url(forResource: "MemoryLaneMLModel 2", withExtension: "mlmodelc") else {
+            return NSError(domain: "VisionObjectRecognitionViewController", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
+        }
+        do {
+            let visionModel = try VNCoreMLModel(for: MLModel(contentsOf: modelURL))
+            let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: { (request, error) in
+                DispatchQueue.main.async(execute: {
+                    if let results = request.results {
+                        self.handleObjectDetectionRequestResults(results)
+                    }
+                })
+            })
+            self.objectDetectionRequests = [objectRecognition]
+//            let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
+//            try? imageRequestHandler.perform([request])
+        } catch let error as NSError {
+            print("Model loading went wrong: \(error)")
+        }
+        
+        return error
+    }
+
+
+    func handleObjectDetectionRequestResults(_ results: [Any]) {
+        CATransaction.begin()
+        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        for observation in results where observation is VNRecognizedObjectObservation {
+            guard let objectObservation = observation as? VNRecognizedObjectObservation else {
+                continue
+            }
+            // Select only the label with the highest confidence.
+            let topLabelObservation = objectObservation.labels[0]
+            self.themeObjects.detect(objectName: topLabelObservation.identifier)
+        }
+//        super.updateNowPlayingLabel(text: "no idea")
+        CATransaction.commit()
+    }
+    
     
     func showCorrectAnimation(time: Double) {
         // fade all image views

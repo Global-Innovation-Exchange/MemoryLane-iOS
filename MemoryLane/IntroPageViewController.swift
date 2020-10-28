@@ -8,11 +8,15 @@
 import UIKit
 
 class IntroPageViewController: UIPageViewController{
-    var pages = [UIViewController]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(handleButtonPressed), name: Notification.Name("Button Pressed"), object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("Button Pressed"), object: nil)
     }
 
     @objc func handleButtonPressed (_ notification: NSNotification) {
@@ -35,12 +39,23 @@ class IntroPageViewController: UIPageViewController{
             self.showToast("Next Button Pressed")
         case 3:
             if currentIndex == 3 {
-                self.goToNextPage()
+                self.switchScreen()
             }
             self.showToast("Play/Pause Button Pressed")
         default:
             print("Button Press Error")
         }
+    }
+    
+    private func switchScreen() {
+        let delayTime = DispatchTime.now() + 0.0
+        DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            if let vc = mainStoryboard.instantiateViewController(withIdentifier: "ThemeSelection") as? ThemeSelectionViewController {
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+        })
     }
 }
 
