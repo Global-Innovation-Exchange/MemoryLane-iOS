@@ -8,6 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Roboto-Black.ttf">
+            <string>Roboto-Black</string>
+        </array>
         <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
         </array>
@@ -61,6 +64,10 @@
                                 <rect key="frame" x="162" y="270" width="486" height="582"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8ZV-mc-3Xd" customClass="AnimationView" customModule="Lottie">
+                                <rect key="frame" x="162" y="321" width="486" height="501"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" fixedFrame="YES" image="arrow" translatesAutoresizingMaskIntoConstraints="NO" id="SI9-ZX-Rmw">
                                 <rect key="frame" x="269" y="491" width="115" height="252"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -72,6 +79,7 @@
                     <connections>
                         <outlet property="arrowImageView" destination="SI9-ZX-Rmw" id="0dL-bQ-USG"/>
                         <outlet property="boxImageView" destination="QWo-YQ-ZEC" id="8T9-nQ-pi6"/>
+                        <outlet property="correctAnimationView" destination="8ZV-mc-3Xd" id="xSE-Vs-3FD"/>
                         <outlet property="correctIconView" destination="AbW-Qd-S9i" id="AM6-38-DbV"/>
                         <outlet property="iPadImageView" destination="WUU-9h-iTb" id="6Fg-nz-FOc"/>
                         <outlet property="instructionTextLabel" destination="ldB-pf-uEo" id="YO6-TA-wBq"/>
@@ -205,42 +213,97 @@
             </objects>
             <point key="canvasLocation" x="1644" y="135"/>
         </scene>
-        <!--Music View Controller-->
-        <scene sceneID="Xyk-ed-CIX">
+        <!--Player View Controller-->
+        <scene sceneID="fb7-RL-pd5">
             <objects>
-                <viewController storyboardIdentifier="MusicViewController" id="064-Ap-Nrk" customClass="MusicViewController" customModule="MemoryLane" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="NA8-JE-7FZ">
+                <viewController storyboardIdentifier="PlayerViewController" id="LLL-AS-P5Z" customClass="PlayerViewController" customModule="MemoryLane" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="F22-dx-xrc">
                         <rect key="frame" x="0.0" y="0.0" width="810" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Great Choice!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chW-sC-DhM" userLabel="Want some music?  Place             in the scanning area.">
-                                <rect key="frame" x="100" y="139" width="611" height="199"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="33D-y4-K1P">
+                                <rect key="frame" x="0.0" y="135" width="810" height="810"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="33D-y4-K1P" secondAttribute="height" multiplier="16:16" id="ENG-tk-mpW"/>
+                                </constraints>
+                            </view>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lR-o6-USt">
+                                <rect key="frame" x="0.0" y="135" width="810" height="810"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="40"/>
+                            </imageView>
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Prompt Q" textAlignment="center" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="d5C-yn-zjQ">
+                                <rect key="frame" x="330.5" y="985" width="149" height="42"/>
+                                <color key="textColor" red="0.28952801169999998" green="0.02095816046" blue="0.0" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="35"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="title" textAlignment="center" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="dok-ME-XS0">
+                                <rect key="frame" x="364.5" y="72" width="81" height="53"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QtC-pI-Clc" customClass="AnimationView" customModule="Lottie">
-                                <rect key="frame" x="180" y="298" width="451" height="379"/>
+                                <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="45"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="status" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YEX-4e-phg">
+                                <rect key="frame" x="334" y="510" width="141" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" systemColor="systemBackgroundColor"/>
+                                <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="50"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dI9-2B-d9Q">
+                                <rect key="frame" x="0.0" y="0.0" width="810" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yc7-ML-qFQ" customClass="AnimationView" customModule="Lottie">
+                                        <rect key="frame" x="111" y="254" width="590" height="440"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rlV-K7-nbU" userLabel="Animation Title">
+                                        <rect key="frame" x="100" y="734" width="611" height="154"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="40"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="Ih5-gs-vco"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <viewLayoutGuide key="safeArea" id="OF7-U1-c6V"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dok-ME-XS0" firstAttribute="centerX" secondItem="F22-dx-xrc" secondAttribute="centerX" id="1yR-Va-fg8"/>
+                            <constraint firstItem="33D-y4-K1P" firstAttribute="centerX" secondItem="F22-dx-xrc" secondAttribute="centerX" id="2on-th-j8T"/>
+                            <constraint firstItem="33D-y4-K1P" firstAttribute="leading" secondItem="OF7-U1-c6V" secondAttribute="leading" id="7qK-EP-RQs"/>
+                            <constraint firstItem="d5C-yn-zjQ" firstAttribute="centerX" secondItem="F22-dx-xrc" secondAttribute="centerX" id="S3V-2a-0J7"/>
+                            <constraint firstItem="33D-y4-K1P" firstAttribute="top" secondItem="dok-ME-XS0" secondAttribute="bottom" constant="10" id="T4c-iJ-txL"/>
+                            <constraint firstItem="33D-y4-K1P" firstAttribute="centerY" secondItem="F22-dx-xrc" secondAttribute="centerY" id="Uga-y2-HPa"/>
+                            <constraint firstItem="33D-y4-K1P" firstAttribute="trailing" secondItem="OF7-U1-c6V" secondAttribute="trailing" id="ZTJ-5P-Jij"/>
+                            <constraint firstItem="d5C-yn-zjQ" firstAttribute="top" secondItem="33D-y4-K1P" secondAttribute="bottom" constant="40" id="tky-5a-f3t"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="animationView" destination="QtC-pI-Clc" id="q0H-vz-igx"/>
+                        <outlet property="animationContainer" destination="dI9-2B-d9Q" id="C3v-eV-cLi"/>
+                        <outlet property="animationTitle" destination="rlV-K7-nbU" id="LHd-wD-0FZ"/>
+                        <outlet property="animationView" destination="yc7-ML-qFQ" id="XjG-Gv-Zce"/>
+                        <outlet property="mediaTitle" destination="dok-ME-XS0" id="dap-yY-Sro"/>
+                        <outlet property="medstatus" destination="YEX-4e-phg" id="dso-me-pqo"/>
+                        <outlet property="promptQ" destination="d5C-yn-zjQ" id="ypL-Cy-9uh"/>
+                        <outlet property="thumbnailView" destination="9lR-o6-USt" id="vLA-UC-0yG"/>
+                        <outlet property="videoView" destination="33D-y4-K1P" id="rme-QH-bnf"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eD9-v4-cFR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r3g-ng-gZd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2417.7777777777778" y="-258.33333333333331"/>
+            <point key="canvasLocation" x="2430.3703703703704" y="135"/>
         </scene>
     </scenes>
     <designables>
+        <designable name="8ZV-mc-3Xd"/>
         <designable name="Nxv-g8-s0I"/>
-        <designable name="QtC-pI-Clc"/>
+        <designable name="yc7-ML-qFQ"/>
     </designables>
     <resources>
         <image name="CorrectIcon" width="1024" height="1024"/>

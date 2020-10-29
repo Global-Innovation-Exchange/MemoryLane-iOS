@@ -13,8 +13,12 @@ class ThemeObjects: NSObject {
     private var detectedObject: String {
         didSet {
             if detectedObject != oldValue  {
-                Helper.playSound(filename: "ObjectDetectedSound")
-                NotificationCenter.default.post(name: Notification.Name("New Object Detected"), object: detectedObject)
+                if detectedObject.isEmpty {
+                    NotificationCenter.default.post(name: Notification.Name("No Object Detected"), object: nil)
+                } else {
+                    Helper.playSound(filename: "ObjectDetectedSound")
+                    NotificationCenter.default.post(name: Notification.Name("New Object Detected"), object: detectedObject)
+                }
             }
         }
     }

@@ -10,6 +10,7 @@ import AVFoundation
 import Vision
 import CoreMotion
 import CoreLocation
+import Lottie
 
 let WIDTH = UIScreen.main.bounds.width
 let HEIGHT = UIScreen.main.bounds.height
@@ -24,6 +25,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     @IBOutlet weak var iPadImageView: UIImageView!
     @IBOutlet weak var correctIconView: UIImageView!
     @IBOutlet weak var arrowImageView: UIImageView!
+    @IBOutlet weak var correctAnimationView: AnimationView!
     
     private let captureSession = AVCaptureSession()
     lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
@@ -198,7 +200,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 // only execute following statement once after four button pressed
                 if !self.allValidationPassed {
                     self.allValidationPassed = true
-                    print("all button pressed")
                     // update instruction label
                     self.instructionTextLabel.text = "Session will start shortly"
                     self.subInstructionTextLabel.text = ""
@@ -275,7 +276,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                             Helper.speak(text: self.instructionTextLabel.text!)
                             self.fadeImage(view: self.reflectorImageView, time: 0.5, alpha: 0)
                             self.reflectorImageView.center.y -= 40
-                            self.fadeImage(view: self.correctIconView, time: 0.5, alpha: 0.0)
+//                            self.fadeImage(view: self.correctIconView, time: 0.5, alpha: 0.0)
+                            self.correctAnimationView.isHidden = true
                             Helper.updateImage(view: self.boxImageView, image: UIImage(named: "box")!, time: 0.5)
                             self.fadeImage(view: self.iPadImageView, time: 0.5, alpha: 1.0)
                             self.fadeImage(view: self.boxImageView, time: 0.5, alpha: 1.0)
@@ -297,7 +299,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     @objc func showReflectorAnimation() {
-        self.fadeImage(view: self.correctIconView, time: 0.5, alpha: 0.0)
+//        self.fadeImage(view: self.correctIconView, time: 0.5, alpha: 0.0)
+        self.correctAnimationView.isHidden = true
         self.fadeImage(view: self.iPadImageView, time: 0.5, alpha: 1.0)
         self.fadeImage(view: self.boxImageView, time: 0.5, alpha: 1.0)
         self.fadeImage(view: self.reflectorImageView, time: 0.5, alpha: 1.0)
@@ -312,7 +315,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     @objc func showButtonAnimation() {
-        self.fadeImage(view: self.correctIconView, time: 0.5, alpha: 0.0)
+//        self.fadeImage(view: self.correctIconView, time: 0.5, alpha: 0.0)
+        self.correctAnimationView.isHidden = true
         self.fadeImage(view: self.iPadImageView, time: 0.5, alpha: 0.0)
         self.fadeImage(view: self.boxImageView, time: 0.5, alpha: 1.0)
         self.fadeImage(view: self.reflectorImageView, time: 0.5, alpha: 0.0)
@@ -398,8 +402,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 })
             })
             self.objectDetectionRequests = [objectRecognition]
-//            let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
-//            try? imageRequestHandler.perform([request])
         } catch let error as NSError {
             print("Model loading went wrong: \(error)")
         }
@@ -411,6 +413,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     func handleObjectDetectionRequestResults(_ results: [Any]) {
         CATransaction.begin()
         CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        if results.isEmpty {
+            self.themeObjects.detect(objectName: "")
+        }
         for observation in results where observation is VNRecognizedObjectObservation {
             guard let objectObservation = observation as? VNRecognizedObjectObservation else {
                 continue
@@ -435,7 +440,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             }
         }
         // show correct icon imageview
-        self.fadeImage(view: self.correctIconView, time: time, alpha: 1.0)
+//        self.fadeImage(view: self.correctIconView, time: time, alpha: 1.0)
+        self.correctAnimationView.isHidden = false
+        self.correctAnimationView.animation = Animation.named("CheckAnimation")
+        correctAnimationView.play()
     }
     
     func fadeImage(view: UIImageView, time: Double, alpha: CGFloat) {
