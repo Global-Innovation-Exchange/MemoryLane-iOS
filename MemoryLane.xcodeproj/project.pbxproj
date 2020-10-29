@@ -14,7 +14,11 @@
 		70059D3A2549622600CBCE5C /* ThemeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70059D392549622600CBCE5C /* ThemeObjects.swift */; };
 		70059D3E2549661400CBCE5C /* ObjectDetectedSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70059D3D2549661400CBCE5C /* ObjectDetectedSound.mp3 */; };
 		70059D42254969C300CBCE5C /* CassetteAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 70059D41254969C300CBCE5C /* CassetteAnimation.json */; };
-		70059D4825496A6900CBCE5C /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70059D4725496A6900CBCE5C /* MusicViewController.swift */; };
+		70059D4825496A6900CBCE5C /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70059D4725496A6900CBCE5C /* PlayerViewController.swift */; };
+		70059D54254A4B1A00CBCE5C /* TVAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 70059D53254A4B1900CBCE5C /* TVAnimation.json */; };
+		70059D58254A78A800CBCE5C /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70059D57254A78A800CBCE5C /* UserDataManager.swift */; };
+		70059D62254A938500CBCE5C /* NextAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 70059D60254A938400CBCE5C /* NextAnimation.json */; };
+		70059D73254B86C300CBCE5C /* LikeAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 70059D72254B86C200CBCE5C /* LikeAnimation.json */; };
 		703D6AE92546BEDC004B7219 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D6AE82546BEDC004B7219 /* Buttons.swift */; };
 		703D6AF92547FF62004B7219 /* ButtonClickSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 703D6AF82547FF61004B7219 /* ButtonClickSound.mp3 */; };
 		703D6AFD2547FFC1004B7219 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D6AFC2547FFC1004B7219 /* Helper.swift */; };
@@ -97,7 +101,11 @@
 		70059D392549622600CBCE5C /* ThemeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeObjects.swift; sourceTree = "<group>"; };
 		70059D3D2549661400CBCE5C /* ObjectDetectedSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ObjectDetectedSound.mp3; sourceTree = "<group>"; };
 		70059D41254969C300CBCE5C /* CassetteAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CassetteAnimation.json; sourceTree = "<group>"; };
-		70059D4725496A6900CBCE5C /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
+		70059D4725496A6900CBCE5C /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		70059D53254A4B1900CBCE5C /* TVAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TVAnimation.json; sourceTree = "<group>"; };
+		70059D57254A78A800CBCE5C /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
+		70059D60254A938400CBCE5C /* NextAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = NextAnimation.json; sourceTree = "<group>"; };
+		70059D72254B86C200CBCE5C /* LikeAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LikeAnimation.json; sourceTree = "<group>"; };
 		703D6AE82546BEDC004B7219 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		703D6AF82547FF61004B7219 /* ButtonClickSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ButtonClickSound.mp3; sourceTree = "<group>"; };
 		703D6AFC2547FFC1004B7219 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -185,6 +193,9 @@
 		70059D2A25490C8800CBCE5C /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				70059D53254A4B1900CBCE5C /* TVAnimation.json */,
+				70059D72254B86C200CBCE5C /* LikeAnimation.json */,
+				70059D60254A938400CBCE5C /* NextAnimation.json */,
 				70059D41254969C300CBCE5C /* CassetteAnimation.json */,
 				70059D3325494AF100CBCE5C /* CheckAnimation.json */,
 				70059D2625490AD500CBCE5C /* ArrowAnimation.json */,
@@ -236,7 +247,8 @@
 				703D6AE82546BEDC004B7219 /* Buttons.swift */,
 				70059D392549622600CBCE5C /* ThemeObjects.swift */,
 				703D6AFC2547FFC1004B7219 /* Helper.swift */,
-				70059D4725496A6900CBCE5C /* MusicViewController.swift */,
+				70059D4725496A6900CBCE5C /* PlayerViewController.swift */,
+				70059D57254A78A800CBCE5C /* UserDataManager.swift */,
 			);
 			path = MemoryLane;
 			sourceTree = "<group>";
@@ -440,10 +452,13 @@
 				70F63F44254664A100D6AC21 /* Roboto-MediumItalic.ttf in Resources */,
 				70059D3425494AF100CBCE5C /* CheckAnimation.json in Resources */,
 				70F2BE8D253F75CA00A3B959 /* CorrectSound.mp3 in Resources */,
+				70059D54254A4B1A00CBCE5C /* TVAnimation.json in Resources */,
 				70F63F45254664A100D6AC21 /* Roboto-ThinItalic.ttf in Resources */,
 				70059D2725490AD500CBCE5C /* ArrowAnimation.json in Resources */,
 				705B2C08252C060200DDC7B8 /* Assets.xcassets in Resources */,
+				70059D62254A938500CBCE5C /* NextAnimation.json in Resources */,
 				70F63F46254664A100D6AC21 /* Roboto-BoldItalic.ttf in Resources */,
+				70059D73254B86C300CBCE5C /* LikeAnimation.json in Resources */,
 				70059D42254969C300CBCE5C /* CassetteAnimation.json in Resources */,
 				705B2C06252C05FF00DDC7B8 /* Main.storyboard in Resources */,
 			);
@@ -579,13 +594,14 @@
 				70F2BE7E253EBB8700A3B959 /* UIColor+isLight.swift in Sources */,
 				705B2C03252C05FF00DDC7B8 /* ViewController.swift in Sources */,
 				705B2BFF252C05FF00DDC7B8 /* AppDelegate.swift in Sources */,
-				70059D4825496A6900CBCE5C /* MusicViewController.swift in Sources */,
+				70059D4825496A6900CBCE5C /* PlayerViewController.swift in Sources */,
 				70059D3025492C7100CBCE5C /* ThemeSelectionViewController.swift in Sources */,
 				70059D3A2549622600CBCE5C /* ThemeObjects.swift in Sources */,
 				7054C40F253828F8004D9ADD /* MemoryLaneMLModel 2.mlmodel in Sources */,
 				70C4EB86253EB5B400799355 /* Double+roundToDecimal.swift in Sources */,
 				703D6B2325482ED4004B7219 /* DataViewController.swift in Sources */,
 				70F2BE83253EBBB900A3B959 /* UIViewController+showToast.swift in Sources */,
+				70059D58254A78A800CBCE5C /* UserDataManager.swift in Sources */,
 				70F2BE79253EBAE900A3B959 /* UIImage+withAlphaComponent.swift in Sources */,
 				70DEF5EB2541253B00CF91E1 /* CGImage+isDark.swift in Sources */,
 				705B2C01252C05FF00DDC7B8 /* SceneDelegate.swift in Sources */,

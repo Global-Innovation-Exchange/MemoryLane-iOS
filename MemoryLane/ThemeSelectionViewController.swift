@@ -7,41 +7,52 @@
 
 import UIKit
 import Vision
+import Lottie
 
 class ThemeSelectionViewController: UIViewController {
 
-    private var requests = [VNRequest]()
-    
+    @IBOutlet weak var animationView: AnimationView!
     var videoList = [String]()
     var musicList = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let user = UserDataManager(userId: "baseline75")
-        print(self.videoList)
         // Post notification to start the object detection process
-        NotificationCenter.default.post(name: Notification.Name("Object Detection Start"), object: nil)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Add observer to listen to object detection notification
-
-        NotificationCenter.default.addObserver(self, selector: #selector(handleObjectDetected), name: Notification.Name("New Object Detected"), object: nil)
+        animationView.animation = Animation.named("ArrowAnimation")
+        animationView.loopMode = .loop
+        animationView.backgroundBehavior = .pauseAndRestore
+        
+        let user = UserDataManager(userId: "baseline75")
+        user.fetchProfile(profileCompletionHandler: { profile, error in
+          if let profile = profile {
+            // Only start object detection when fetchProfile is completed
+            NotificationCenter.default.post(name: Notification.Name("Object Detection Start"), object: nil)
+            DispatchQueue.main.async() {
+                self.videoList = profile.video
+                self.musicList = profile.music
+            }
+          }
+        })
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleObjectDetected), name: Notification.Name("New Object Detected"), object: nil)
+        animationView.play()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: Notification.Name("New Object Detected"), object: nil)
     }
     
     @objc func handleObjectDetected (_ notification: NSNotification) {
         switch notification.object as! String {
         case "tv":
-            print("Playing Video")
+//            print("Playing Video")
             switchScreen(animationName: "TVAnimation", mediaType: "video", mediaList: self.videoList)
         case "cassette":
-            print("Playing Music")
+//            print("Playing Music")
             switchScreen(animationName: "CassetteAnimation", mediaType: "music", mediaList: self.musicList)
         default:
             print("Unidentified Object")
