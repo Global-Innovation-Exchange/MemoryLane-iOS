@@ -204,14 +204,29 @@
                                 <rect key="frame" x="180" y="702" width="450" height="272"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="cassetteTape" translatesAutoresizingMaskIntoConstraints="NO" id="xMp-ce-90P">
+                                <rect key="frame" x="219" y="118" width="97" height="280"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="videoCamera" translatesAutoresizingMaskIntoConstraints="NO" id="78J-yk-9Iq">
+                                <rect key="frame" x="209" y="332" width="110" height="262"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wer-Kn-TTm" customClass="AnimationView" customModule="Lottie">
+                                <rect key="frame" x="353" y="717" width="105" height="167"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fO2-h1-ZFk"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <connections>
+                        <outlet property="animationView" destination="wer-Kn-TTm" id="wXs-fY-nCz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="saL-de-1qa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1644" y="135"/>
+            <point key="canvasLocation" x="1643.7037037037037" y="135"/>
         </scene>
         <!--Player View Controller-->
         <scene sceneID="fb7-RL-pd5">
@@ -303,6 +318,7 @@
     <designables>
         <designable name="8ZV-mc-3Xd"/>
         <designable name="Nxv-g8-s0I"/>
+        <designable name="wer-Kn-TTm"/>
         <designable name="yc7-ML-qFQ"/>
     </designables>
     <resources>
@@ -310,9 +326,11 @@
         <image name="arrow" width="496" height="410"/>
         <image name="box" width="1287" height="1028"/>
         <image name="box1" width="1287" height="1183"/>
+        <image name="cassetteTape" width="512" height="512"/>
         <image name="headnotch" width="1620" height="2160"/>
         <image name="ipad" width="540" height="560"/>
         <image name="reflector" width="192" height="131"/>
+        <image name="videoCamera" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
