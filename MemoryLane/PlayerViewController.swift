@@ -86,8 +86,7 @@ class PlayerViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name("No Object Detected"), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name("Button Pressed"), object: nil)
         self.removeVideoEndObserver()
-        player.pause()
-        player = nil
+        dismissPlayer()
         currentMediaIndex = 0
     }
     
@@ -131,7 +130,7 @@ class PlayerViewController: UIViewController {
                 }
                 mediaCompletionHandler(Media(title: title, url: url, thumbnail: thumbnail, prompt: prompt), nil)
             } catch let parseErr {
-                print("JSON error: \(parseErr.localizedDescription)")
+                print("JSON error: \(parseErr.localizedDescription), ID: \(id)")
                 mediaCompletionHandler(nil, parseErr)
                 
             }
@@ -146,8 +145,9 @@ class PlayerViewController: UIViewController {
                 DispatchQueue.main.async { [self] in
                     let url = URL(string: thismedia.url)
                     self.mediaTitle.text = thismedia.title
+                    self.mediaTitle.adjustsFontSizeToFitWidth = true
                     self.promptQ.text = thismedia.prompt
-                    
+                    self.dismissPlayer()
                     self.player = AVPlayer(url: url!)
                     self.playerLayer = AVPlayerLayer(player: player)
                     self.playerLayer.videoGravity = .resizeAspect
@@ -161,9 +161,9 @@ class PlayerViewController: UIViewController {
                         self.thumbnailView.isHidden = true
                     }
 
-                    
                     self.videoView.layer.addSublayer(playerLayer)
                     self.player.play()
+                    self.isPlaying = true
                     self.addVideoEndObserver()
                 }
             }
@@ -172,6 +172,13 @@ class PlayerViewController: UIViewController {
     
     @objc func handleNoObjectDetected (_ notification: NSNotification) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func dismissPlayer() {
+        if player != nil {
+            player.pause()
+        }
+        player = nil
     }
     
     // track video "left" duration
@@ -224,16 +231,20 @@ class PlayerViewController: UIViewController {
         case "NextAnimation":
             animationTitle.text = "Next"
         case "LikeAnimation":
-            animationTitle.text = "Yay! you like this one. I will try my best to keep playing things you like"
+            animationTitle.text = "Yay! you like this one. That’s helpful to know!"
         default:
             animationTitle.text = "Great Choice!"
             
         }
-        animationContainer.isHidden = false
-        animationView.animation = Animation.named(animationName)
-        animationView.play {
-            (finished) in
-            self.animationContainer.isHidden = true
+        // only show animation when animation is hidden
+        // this is to prevent user press button repeatly during animation playing
+        if animationContainer.isHidden {
+            animationContainer.isHidden = false
+            animationView.animation = Animation.named(animationName)
+            animationView.play {
+                (finished) in
+                self.animationContainer.isHidden = true
+            }
         }
     }
     
@@ -249,8 +260,7 @@ class PlayerViewController: UIViewController {
             removeVideoEndObserver()
             promptQ.isHidden = true
             ended = false
-            player.pause()
-            player = nil
+            dismissPlayer()
             playMedia()
         case 2:
             // Next
@@ -259,8 +269,7 @@ class PlayerViewController: UIViewController {
                 showAnimation(animationName: "NextAnimation")
                 self.promptQ.isHidden = true
                 removeVideoEndObserver()
-                player.pause()
-                player = nil
+                dismissPlayer()
                 isPlaying = true
                 medstatus.isHidden = true
                 playMedia()
@@ -272,7 +281,7 @@ class PlayerViewController: UIViewController {
                 medstatus.isHidden = false
             }
         case 3:
-            if !ended {
+            if !ended && player != nil{
                 // Play and Pause
                 if isPlaying {
                     player.pause()
