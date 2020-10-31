@@ -23,22 +23,28 @@ class IntroPageViewController: UIPageViewController{
         guard let currentIndex = dataSource?.presentationIndex?(for: self) else {return}
         switch notification.object as! Int {
         case 0:
-            if currentIndex == 0 {
+            // Like Button
+            if currentIndex == 1 {
                 self.goToNextPage()
             }
+            
             self.showToast("Like Button Pressed")
         case 1:
-            if currentIndex == 1 {
+            // Repeat Button
+            if currentIndex == 2 {
                 self.goToNextPage()
             }
             self.showToast("Repeat Button Pressed")
         case 2:
-            if currentIndex == 2 {
+            // Next Button
+            if currentIndex == 0 || currentIndex == 3 {
                 self.goToNextPage()
             }
             self.showToast("Next Button Pressed")
         case 3:
-            if currentIndex == 3 {
+            // Play/pause Button
+            if currentIndex == 4 {
+                Helper.stopSpeaking()
                 self.switchScreen()
             }
             self.showToast("Play/Pause Button Pressed")
@@ -51,7 +57,7 @@ class IntroPageViewController: UIPageViewController{
         let delayTime = DispatchTime.now() + 0.0
         DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-            if let vc = mainStoryboard.instantiateViewController(withIdentifier: "ThemeSelection") as? ThemeSelectionViewController {
+            if let vc = mainStoryboard.instantiateViewController(withIdentifier: String(describing: ThemeSelectionViewController.self)) as? ThemeSelectionViewController {
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true, completion: nil)
             }

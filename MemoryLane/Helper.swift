@@ -52,11 +52,18 @@ class Helper{
     static let speechSynthesizer = AVSpeechSynthesizer()
     
     static func speak(text: String) {
+        stopSpeaking()
         let speechUtterance = AVSpeechUtterance(string: text)
-        speechUtterance.voice = AVSpeechSynthesisVoice(language: AVSpeechSynthesisVoice.currentLanguageCode())
-//        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
-        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.5
-        speechUtterance.pitchMultiplier = 0.8
+//        speechUtterance.voice = AVSpeechSynthesisVoice(language: AVSpeechSynthesisVoice.currentLanguageCode())
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.4
+        speechUtterance.pitchMultiplier = 1.2
         speechSynthesizer.speak(speechUtterance)
+    }
+    
+    static func stopSpeaking() {
+        if speechSynthesizer.isSpeaking {
+            speechSynthesizer.stopSpeaking(at: .immediate)
+        }
     }
 }

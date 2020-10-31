@@ -48,12 +48,12 @@ class ThemeSelectionViewController: UIViewController {
     
     @objc func handleObjectDetected (_ notification: NSNotification) {
         switch notification.object as! String {
-        case "tv":
+        case "video":
 //            print("Playing Video")
-            switchScreen(animationName: "TVAnimation", mediaType: "video", mediaList: self.videoList)
-        case "cassette":
+            switchScreen(animationName: "TVAnimation", mediaType: "video", mediaList: self.videoList.shuffled())
+        case "music":
 //            print("Playing Music")
-            switchScreen(animationName: "CassetteAnimation", mediaType: "music", mediaList: self.musicList)
+            switchScreen(animationName: "CassetteAnimation", mediaType: "music", mediaList: self.musicList.shuffled())
         default:
             print("Unidentified Object")
             print(notification.object as! String)

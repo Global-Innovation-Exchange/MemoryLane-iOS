@@ -18,6 +18,7 @@ let BRIGHTNESS_THRESHOLD: CGFloat = 0.5
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    @IBOutlet weak var headnotchImageView: UIImageView!
     @IBOutlet weak var instructionTextLabel: UILabel!
     @IBOutlet weak var subInstructionTextLabel: UILabel!
     @IBOutlet weak var reflectorImageView: UIImageView!
@@ -26,6 +27,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     @IBOutlet weak var correctIconView: UIImageView!
     @IBOutlet weak var arrowImageView: UIImageView!
     @IBOutlet weak var correctAnimationView: AnimationView!
+    
+    @IBOutlet weak var angleLabel: UILabel!
     
     private let captureSession = AVCaptureSession()
     lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
@@ -216,10 +219,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     
     private func switchScreen() {
-        let delayTime = DispatchTime.now() + 1.0
+        let delayTime = DispatchTime.now() + 1.7
         DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-            if let vc = mainStoryboard.instantiateViewController(withIdentifier: "Intro") as? IntroViewController {
+            if let vc = mainStoryboard.instantiateViewController(withIdentifier: String(describing: IntroViewController.self)) as? IntroViewController {
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true, completion: nil)
             }
@@ -250,9 +253,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 (data, error) in
                 if let data = data {
                     let pitch = data.attitude.pitch * (180.0 / .pi)
-//                    self.angleLabel.text = String(format: "%.1f°", pitch)
+                    self.angleLabel.text = String(format: "%.1f°", pitch)
                     // pitch angle range
-                    if 73..<76 ~= pitch {
+                    if 72..<76 ~= pitch {
                         if timer.roundToDecimal(1) < validateDelay {
                             timer += updateInterval
                         } else if timer.roundToDecimal(1) == validateDelay {
@@ -276,7 +279,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                             Helper.speak(text: self.instructionTextLabel.text!)
                             self.fadeImage(view: self.reflectorImageView, time: 0.5, alpha: 0)
                             self.reflectorImageView.center.y -= 40
-//                            self.fadeImage(view: self.correctIconView, time: 0.5, alpha: 0.0)
                             self.correctAnimationView.isHidden = true
                             Helper.updateImage(view: self.boxImageView, image: UIImage(named: "box")!, time: 0.5)
                             self.fadeImage(view: self.iPadImageView, time: 0.5, alpha: 1.0)
@@ -333,7 +335,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                        }, completion: nil)
     }
     
-    var validationDelay = 80
+    var validationDelay = 60
     var reflectorValidationTimer = 0
     private func reflectorValidation(in image: CGImage) {
 //        print("slot detection")
@@ -389,7 +391,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         // Setup Vision parts
         let error: NSError! = nil
         
-        guard let modelURL = Bundle.main.url(forResource: "MemoryLaneMLModel 2", withExtension: "mlmodelc") else {
+        guard let modelURL = Bundle.main.url(forResource: "Memory Lane 1", withExtension: "mlmodelc") else {
             return NSError(domain: "VisionObjectRecognitionViewController", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
         }
         do {
@@ -436,11 +438,12 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         {
             if let item = subview as? UIImageView
             {
-                self.fadeImage(view: item, time: time, alpha: 0.0)
+                if item != self.headnotchImageView {
+                    self.fadeImage(view: item, time: time, alpha: 0.0)
+                }
             }
         }
         // show correct icon imageview
-//        self.fadeImage(view: self.correctIconView, time: time, alpha: 1.0)
         self.correctAnimationView.isHidden = false
         self.correctAnimationView.animation = Animation.named("CheckAnimation")
         correctAnimationView.play()

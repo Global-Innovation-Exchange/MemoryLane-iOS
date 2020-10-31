@@ -12,7 +12,8 @@ class IntroViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     
     let dataSource = [
-        ["display": "Always press the \"Like\" when you enjoy the content, this can also help us understand your taste. \n\nPress the \"Like\" button to proceed", "centerX": CGFloat(298), "centerY": CGFloat(687.5)],
+        ["display": "Hello, \n\nLet’s enjoy music and movies that will bring you great memories to share and talk about. \n\nPush the \"Next\" button on the box to start", "centerX": CGFloat(358), "centerY": CGFloat(707.5)],
+        ["display": "The white button is the \"Like\" button. \n\nPress the \"Like\" button to proceed", "centerX": CGFloat(298), "centerY": CGFloat(687.5)],
         ["display": "To play the content again, you can press the \"Repeat\" button.  \n\nPress \"Repeat\" button to proceed", "centerX": CGFloat(328), "centerY": CGFloat(697.5)],
         ["display": "The \"Next\" button can help you skip to the next song/video. \n\nPress \"Next\" button to proceed", "centerX": CGFloat(358), "centerY": CGFloat(707.5)],
         ["display": "Use the \"Play/Pause\" button to control the media playing. \n\nPress \"Play/Pause\" button to proceed", "centerX": CGFloat(388), "centerY": CGFloat(717.5)]
@@ -55,12 +56,12 @@ class IntroViewController: UIViewController {
         pageViewController.setViewControllers([startingViewController], direction: .forward, animated: true)
     }
     
-    func detailViewControllerAt(index: Int) -> DataViewController? {
+    func detailViewControllerAt(index: Int) -> IntroDataViewController? {
         if index >= dataSource.count || dataSource.count == 0 {
             return nil
         }
         
-        guard let dataViewController = storyboard?.instantiateViewController(withIdentifier: String(describing: DataViewController.self)) as? DataViewController else {
+        guard let dataViewController = storyboard?.instantiateViewController(withIdentifier: String(describing: IntroDataViewController.self)) as? IntroDataViewController else {
             return nil
         }
         
@@ -85,9 +86,9 @@ extension IntroViewController: UIPageViewControllerDelegate, UIPageViewControlle
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
-        let dataViewController = viewController as? DataViewController
+        let IntroDataViewController = viewController as? IntroDataViewController
         
-        guard var currentIndex = dataViewController?.index else {
+        guard var currentIndex = IntroDataViewController?.index else {
             return nil
         }
         
@@ -104,7 +105,7 @@ extension IntroViewController: UIPageViewControllerDelegate, UIPageViewControlle
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
-        let dataViewController = viewController as? DataViewController
+        let dataViewController = viewController as? IntroDataViewController
         
         guard var currentIndex = dataViewController?.index else {
             return nil
