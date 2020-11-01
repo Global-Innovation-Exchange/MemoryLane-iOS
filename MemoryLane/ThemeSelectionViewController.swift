@@ -22,7 +22,7 @@ class ThemeSelectionViewController: UIViewController {
         animationView.loopMode = .loop
         animationView.backgroundBehavior = .pauseAndRestore
         
-        let user = UserDataManager(userId: "baseline75")
+        let user = UserDataManager(userId: "test")
         user.fetchProfile(profileCompletionHandler: { profile, error in
           if let profile = profile {
             // Only start object detection when fetchProfile is completed

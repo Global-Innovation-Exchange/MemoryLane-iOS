@@ -59,7 +59,7 @@ class PlayerViewController: UIViewController {
     }
     
     var mediaList: [String] = []
-    var numofMedia: Int = 2
+    var numofMedia: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,34 +140,39 @@ class PlayerViewController: UIViewController {
     
     //preparing media screen contents and layers
     func playMedia(){
-        self.fetchMedia(type: mediaType, id: mediaList[currentMediaIndex], mediaCompletionHandler: { media, error in
-            if let thismedia = media {
-                DispatchQueue.main.async { [self] in
-                    let url = URL(string: thismedia.url)
-                    self.mediaTitle.text = thismedia.title
-                    self.mediaTitle.adjustsFontSizeToFitWidth = true
-                    self.promptQ.text = thismedia.prompt
-                    self.dismissPlayer()
-                    self.player = AVPlayer(url: url!)
-                    self.playerLayer = AVPlayerLayer(player: player)
-                    self.playerLayer.videoGravity = .resizeAspect
-                    self.playerLayer.frame = videoView.bounds
-                    if self.mediaType == "music" {
-                        let thumbnailURL = URL(string: thismedia.thumbnail)
-                        let thumbnail = try? Data(contentsOf: thumbnailURL!)
-                        thumbnailView.image = UIImage(data: thumbnail!)
-                        self.thumbnailView.isHidden = false
-                    } else {
-                        self.thumbnailView.isHidden = true
-                    }
+        // handle the case where the media list is empty
+        if currentMediaIndex < numofMedia {
+            self.fetchMedia(type: mediaType, id: mediaList[currentMediaIndex], mediaCompletionHandler: { media, error in
+                if let thismedia = media {
+                    DispatchQueue.main.async { [self] in
+                        let url = URL(string: thismedia.url)
+                        self.mediaTitle.text = thismedia.title
+                        self.mediaTitle.adjustsFontSizeToFitWidth = true
+                        self.promptQ.text = thismedia.prompt
+                        self.dismissPlayer()
+                        self.player = AVPlayer(url: url!)
+                        self.playerLayer = AVPlayerLayer(player: player)
+                        self.playerLayer.videoGravity = .resizeAspect
+                        self.playerLayer.frame = videoView.bounds
+                        if self.mediaType == "music" {
+                            let thumbnailURL = URL(string: thismedia.thumbnail)
+                            let thumbnail = try? Data(contentsOf: thumbnailURL!)
+                            thumbnailView.image = UIImage(data: thumbnail!)
+                            self.thumbnailView.isHidden = false
+                        } else {
+                            self.thumbnailView.isHidden = true
+                        }
 
-                    self.videoView.layer.addSublayer(playerLayer)
-                    self.player.play()
-                    self.isPlaying = true
-                    self.addVideoEndObserver()
+                        self.videoView.layer.addSublayer(playerLayer)
+                        self.player.play()
+                        self.isPlaying = true
+                        self.addVideoEndObserver()
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            self.mediaTitle.text = "No content was found"
+        }
     }
     
     @objc func handleNoObjectDetected (_ notification: NSNotification) {

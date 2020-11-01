@@ -7,7 +7,6 @@ target 'MemoryLane' do
 
   # Pods for MemoryLane
   pod 'lottie-ios'
-  pod "Player", "~> 0.13.2"
 
   target 'MemoryLaneTests' do
     inherit! :search_paths
