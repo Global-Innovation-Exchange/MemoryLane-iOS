@@ -46,7 +46,7 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 [swift-url]: https://swift.org/
 [license-image]: https://img.shields.io/badge/License-MIT-blue.svg
 [license-url]: LICENSE
-[build-image]: https://github.com/Global-Innovation-Exchange/MemoryLane/workflows/Swift/badge.svg
+[build-image]: https://github.com/Global-Innovation-Exchange/MemoryLane/workflows/Build%20Test/badge.svg
 [build-url]: https://github.com/backslash-f/simage/actions
 [platform-image]: https://img.shields.io/cocoapods/p/LFAlertController.svg?style=flat
 [platform-url]: http://cocoapods.org/pods/LFAlertController
