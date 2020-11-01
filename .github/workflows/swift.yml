@@ -1,4 +1,4 @@
-name: Swift
+name: Build Test
 
 on:
   push:
@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Xcodebuild Test
-      run: xcodebuild clean test -project MemoryLane.xcodeproj -scheme MemoryLane -destination "platform=iOS Simulator,name=iPad (8th generation)"
+      run: xcodebuild clean test -workspace MemoryLane.xcworkspace -scheme MemoryLane -destination "platform=iOS Simulator,name=iPad (8th generation)"
