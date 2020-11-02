@@ -255,6 +255,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="810" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Loading..." textAlignment="center" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="dok-ME-XS0">
+                                <rect key="frame" x="30" y="70.5" width="750" height="54.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="750" id="ihz-uX-C2a"/>
+                                </constraints>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="45"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="33D-y4-K1P">
                                 <rect key="frame" x="0.0" y="135" width="810" height="810"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -266,8 +275,11 @@
                                 <rect key="frame" x="0.0" y="135" width="810" height="810"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Prompt Q" textAlignment="center" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="d5C-yn-zjQ">
-                                <rect key="frame" x="330.5" y="985" width="149" height="42"/>
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Prompt Q" textAlignment="center" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="d5C-yn-zjQ">
+                                <rect key="frame" x="30" y="985" width="750" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="750" id="uJr-CY-yFr"/>
+                                </constraints>
                                 <color key="textColor" red="0.28952801169999998" green="0.02095816046" blue="0.0" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="35"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -277,12 +289,6 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" systemColor="systemBackgroundColor"/>
                                 <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="50"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Loading..." textAlignment="center" minimumFontSize="25" translatesAutoresizingMaskIntoConstraints="NO" id="dok-ME-XS0">
-                                <rect key="frame" x="303" y="72" width="204" height="53"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="45"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dI9-2B-d9Q">

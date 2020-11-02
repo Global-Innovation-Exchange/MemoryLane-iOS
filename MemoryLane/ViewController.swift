@@ -44,7 +44,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         CGPoint(x: WIDTH-5, y: 60),
     ]
     
-    let buttonNames = ["Like", "Repeat", "Next", "Play/Pause"]
     let buttons = Buttons()
     // Global Bool for validation state
     var iPadValidated = false

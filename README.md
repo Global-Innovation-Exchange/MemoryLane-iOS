@@ -4,7 +4,6 @@
 [![Swift Version][swift-image]][swift-url]
 [![xcode-version][xcode-image]][xcode-url]
 [![build-status][build-image]][build-url]
-[![Platform][platform-image]][platform-url]
 [![License][license-image]][license-url]
 
 Memory Lane project is a Global Innovation Exchange Launch Project. This iOS app is designed and developed for an iPad which can be placed on a tangible device to provide simple physical interaction to help older adults with dementia to navigate and annotate the music or video content for reminiscence therapy.
@@ -48,7 +47,5 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 [license-url]: LICENSE
 [build-image]: https://github.com/Global-Innovation-Exchange/MemoryLane/workflows/Build%20Test/badge.svg
 [build-url]: https://github.com/Global-Innovation-Exchange/MemoryLane/actions
-[platform-image]: https://img.shields.io/cocoapods/p/LFAlertController.svg?style=flat
-[platform-url]: http://cocoapods.org/pods/LFAlertController
 [xcode-image]: https://img.shields.io/badge/xcode-12.0.1-brightgreen
 [xcode-url]: https://developer.apple.com/xcode/

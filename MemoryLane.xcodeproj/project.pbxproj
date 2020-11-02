@@ -34,7 +34,6 @@
 		705B2C16252C060300DDC7B8 /* MemoryLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C15252C060300DDC7B8 /* MemoryLaneTests.swift */; };
 		705B2C21252C060300DDC7B8 /* MemoryLaneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C20252C060300DDC7B8 /* MemoryLaneUITests.swift */; };
 		70C4EB86253EB5B400799355 /* Double+roundToDecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4EB85253EB5B400799355 /* Double+roundToDecimal.swift */; };
-		70DEF5EB2541253B00CF91E1 /* CGImage+isDark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DEF5EA2541253B00CF91E1 /* CGImage+isDark.swift */; };
 		70F2BE74253EB6D300A3B959 /* CALayer+isLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F2BE73253EB6D300A3B959 /* CALayer+isLight.swift */; };
 		70F2BE79253EBAE900A3B959 /* UIImage+withAlphaComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F2BE78253EBAE900A3B959 /* UIImage+withAlphaComponent.swift */; };
 		70F2BE7E253EBB8700A3B959 /* UIColor+isLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F2BE7D253EBB8700A3B959 /* UIColor+isLight.swift */; };
@@ -127,7 +126,6 @@
 		705B2C20252C060300DDC7B8 /* MemoryLaneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLaneUITests.swift; sourceTree = "<group>"; };
 		705B2C22252C060300DDC7B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70C4EB85253EB5B400799355 /* Double+roundToDecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+roundToDecimal.swift"; sourceTree = "<group>"; };
-		70DEF5EA2541253B00CF91E1 /* CGImage+isDark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+isDark.swift"; sourceTree = "<group>"; };
 		70F2BE73253EB6D300A3B959 /* CALayer+isLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+isLight.swift"; sourceTree = "<group>"; };
 		70F2BE78253EBAE900A3B959 /* UIImage+withAlphaComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+withAlphaComponent.swift"; sourceTree = "<group>"; };
 		70F2BE7D253EBB8700A3B959 /* UIColor+isLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIColor+isLight.swift"; path = "MemoryLane/UIColor+isLight.swift"; sourceTree = SOURCE_ROOT; };
@@ -279,7 +277,6 @@
 				70C4EB85253EB5B400799355 /* Double+roundToDecimal.swift */,
 				70F2BE73253EB6D300A3B959 /* CALayer+isLight.swift */,
 				70F2BE78253EBAE900A3B959 /* UIImage+withAlphaComponent.swift */,
-				70DEF5EA2541253B00CF91E1 /* CGImage+isDark.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -603,7 +600,6 @@
 				70F2BE83253EBBB900A3B959 /* UIViewController+showToast.swift in Sources */,
 				70059D58254A78A800CBCE5C /* UserDataManager.swift in Sources */,
 				70F2BE79253EBAE900A3B959 /* UIImage+withAlphaComponent.swift in Sources */,
-				70DEF5EB2541253B00CF91E1 /* CGImage+isDark.swift in Sources */,
 				705B2C01252C05FF00DDC7B8 /* SceneDelegate.swift in Sources */,
 				703D6AE92546BEDC004B7219 /* Buttons.swift in Sources */,
 				703D6B1F25482DC1004B7219 /* IntroViewController.swift in Sources */,
