@@ -1,5 +1,5 @@
-# Product Name
-> Short blurb about what your product does.
+# Memory Lane
+> The iOS app works with the Memory Lane box.
 
 [![Swift Version][swift-image]][swift-url]
 [![xcode-version][xcode-image]][xcode-url]
