@@ -25,6 +25,7 @@
 		703D6AFD2547FFC1004B7219 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D6AFC2547FFC1004B7219 /* Helper.swift */; };
 		703D6B1F25482DC1004B7219 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D6B1E25482DC1004B7219 /* IntroViewController.swift */; };
 		703D6B2325482ED4004B7219 /* IntroDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D6B2225482ED4004B7219 /* IntroDataViewController.swift */; };
+		705AC7E7255CC15A0020004A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705AC7E6255CC15A0020004A /* Reachability.swift */; };
 		705B2BFF252C05FF00DDC7B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2BFE252C05FF00DDC7B8 /* AppDelegate.swift */; };
 		705B2C01252C05FF00DDC7B8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C00252C05FF00DDC7B8 /* SceneDelegate.swift */; };
 		705B2C03252C05FF00DDC7B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C02252C05FF00DDC7B8 /* ViewController.swift */; };
@@ -111,6 +112,7 @@
 		703D6AFC2547FFC1004B7219 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		703D6B1E25482DC1004B7219 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		703D6B2225482ED4004B7219 /* IntroDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDataViewController.swift; sourceTree = "<group>"; };
+		705AC7E6255CC15A0020004A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		705B2BFB252C05FF00DDC7B8 /* MemoryLane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryLane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		705B2BFE252C05FF00DDC7B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		705B2C00252C05FF00DDC7B8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				703D6AFC2547FFC1004B7219 /* Helper.swift */,
 				70059D4725496A6900CBCE5C /* PlayerViewController.swift */,
 				70059D57254A78A800CBCE5C /* UserDataManager.swift */,
+				705AC7E6255CC15A0020004A /* Reachability.swift */,
 			);
 			path = MemoryLane;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 			files = (
 				70F2BE74253EB6D300A3B959 /* CALayer+isLight.swift in Sources */,
 				70F63F532546A15A00D6AC21 /* IntroPageViewController.swift in Sources */,
+				705AC7E7255CC15A0020004A /* Reachability.swift in Sources */,
 				703D6AFD2547FFC1004B7219 /* Helper.swift in Sources */,
 				70F2BE7E253EBB8700A3B959 /* UIColor+isLight.swift in Sources */,
 				705B2C03252C05FF00DDC7B8 /* ViewController.swift in Sources */,
