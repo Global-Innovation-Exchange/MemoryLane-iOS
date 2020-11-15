@@ -11,7 +11,7 @@ class UserDataManager {
     
     struct Profile: Codable {
         let first_name: String
-        let last_name: Int
+        let last_name: String
         let birth_year: Int
         let music: [String]
         let video: [String]
@@ -49,8 +49,8 @@ class UserDataManager {
                 profileCompletionHandler(parsedJSON, nil)
             } catch let parseErr {
                 print("JSON error: \(parseErr.localizedDescription)")
+                print(parseErr)
                 profileCompletionHandler(nil, parseErr)
-                
             }
         })
         task.resume()

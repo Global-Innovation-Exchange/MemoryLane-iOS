@@ -26,7 +26,7 @@ class PlayerViewController: UIViewController {
     var playerLayer: AVPlayerLayer!
     var animationName: String?
         
-    
+    var uid: String!
     var mediaType: String!
     //track if media playing
     var isPlaying: Bool = true
@@ -35,6 +35,10 @@ class PlayerViewController: UIViewController {
     var ended: Bool = false
     // will be used for next media playing
     var currentMediaIndex: Int = 0
+    
+    var duration: Float64 = 0.0
+    var repeatCount: Int = 0
+    var like: Bool = false
     
     //--------- this is the struct of urls, questions and titles -------//
     struct Music: Codable {
@@ -131,6 +135,7 @@ class PlayerViewController: UIViewController {
                 mediaCompletionHandler(Media(title: title, url: url, thumbnail: thumbnail, prompt: prompt), nil)
             } catch let parseErr {
                 print("JSON error: \(parseErr.localizedDescription), ID: \(id)")
+                print(parseErr)
                 mediaCompletionHandler(nil, parseErr)
                 
             }
@@ -198,7 +203,6 @@ class PlayerViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
                 self?.addVideoEndObserver()
             })
-
             return
         }
         
@@ -208,7 +212,6 @@ class PlayerViewController: UIViewController {
             self.medstatus.text = "THE END"
             self.medstatus.isHidden = false
             self.ended = true
-            
         })
         
         // catch when 10s left and show the prompt Q
@@ -236,7 +239,7 @@ class PlayerViewController: UIViewController {
         case "NextAnimation":
             animationTitle.text = "Next"
         case "LikeAnimation":
-            animationTitle.text = "Yay! you like this one. That’s helpful to know!"
+            animationTitle.text = "Yay! You like this one. That’s helpful to know!"
         default:
             animationTitle.text = "Great Choice!"
             
@@ -253,14 +256,63 @@ class PlayerViewController: UIViewController {
         }
     }
     
+    func recordAction() {
+        if self.player != nil {
+            let currentTime = self.player.currentTime()
+            print(CMTimeGetSeconds(currentTime))
+            self.duration += CMTimeGetSeconds(currentTime)
+        }
+        print(self.mediaList[currentMediaIndex], self.like, self.repeatCount, self.duration)
+        let body = ["RepeatPressCount" : self.repeatCount,
+                    "LikePressed": self.like,
+                    "Duration": self.duration] as [String : Any]
+        let bodyData = try? JSONSerialization.data(
+            withJSONObject: body,
+            options: []
+        )
+
+        let cid = self.mediaList[currentMediaIndex]
+        let baseURL = "https://us-central1-memory-lane-954c7.cloudfunctions.net"
+        let endpoint = "/updateAction?uid=\(uid!)&cid=\(cid)"
+        let url = URL(string: baseURL + endpoint)
+        var request = URLRequest(url: url!)
+        // Change the URLRequest to a POST request
+        request.httpMethod = "POST"
+        request.httpBody = bodyData
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+            
+            if let error = error {
+                // Handle HTTP request error
+                print(error)
+            } else if let data = data {
+                // Handle HTTP request response
+                print(data)
+            } else {
+                // Handle unexpected error
+            }
+        }
+        task.resume()
+    }
+    
     @objc func handleButtonPressed (_ notification: NSNotification) {
         switch notification.object as! Int {
         case 0:
             // Like
+            self.like = true
             showAnimation(animationName: "LikeAnimation")
         case 1:
             // Repeat
 //            player.seek(to: .zero)
+            if self.player != nil {
+                let currentTime = self.player.currentTime()
+                print(CMTimeGetSeconds(currentTime))
+                self.duration += CMTimeGetSeconds(currentTime)
+            }
+            self.repeatCount += 1
             medstatus.isHidden = true
             removeVideoEndObserver()
             promptQ.isHidden = true
@@ -269,8 +321,12 @@ class PlayerViewController: UIViewController {
             playMedia()
         case 2:
             // Next
-            currentMediaIndex += 1
             if currentMediaIndex < numofMedia {
+                self.recordAction()
+                self.repeatCount = 0
+                self.like = false
+                self.duration = 0
+                currentMediaIndex += 1
                 showAnimation(animationName: "NextAnimation")
                 self.promptQ.isHidden = true
                 removeVideoEndObserver()
@@ -281,7 +337,7 @@ class PlayerViewController: UIViewController {
             } else {
                 currentMediaIndex -= 1
                 medstatus.text = "No more media is available right now"
-                player.pause()
+                dismissPlayer()
                 isPlaying = false
                 medstatus.isHidden = false
             }
@@ -294,8 +350,7 @@ class PlayerViewController: UIViewController {
                     isPlaying = false
                     medstatus.text = "Paused"
                     medstatus.isHidden = false
-                }
-                else {
+                } else {
                     player.play()
                     //sender.setTitle("pause", for: .normal)
                     isPlaying = true

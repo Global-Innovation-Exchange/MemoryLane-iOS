@@ -14,6 +14,7 @@ class ThemeSelectionViewController: UIViewController {
     @IBOutlet weak var animationView: AnimationView!
     var videoList = [String]()
     var musicList = [String]()
+    var uid = "test"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,7 @@ class ThemeSelectionViewController: UIViewController {
         animationView.loopMode = .loop
         animationView.backgroundBehavior = .pauseAndRestore
         
-        let user = UserDataManager(userId: "test")
+        let user = UserDataManager(userId: uid)
         user.fetchProfile(profileCompletionHandler: { profile, error in
           if let profile = profile {
             // Only start object detection when fetchProfile is completed
@@ -69,6 +70,7 @@ class ThemeSelectionViewController: UIViewController {
                 vc.animationName = animationName
                 vc.mediaType = mediaType
                 vc.mediaList = mediaList
+                vc.uid = self.uid
                 self.present(vc, animated: true, completion: nil)
             }
         })

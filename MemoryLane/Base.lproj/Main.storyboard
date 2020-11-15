@@ -30,10 +30,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="810" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headnotch" translatesAutoresizingMaskIntoConstraints="NO" id="pjW-VC-8R4">
-                                <rect key="frame" x="0.0" y="0.0" width="810" height="1080"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hy0-SJ-TuC" userLabel="Sub-instruction">
                                 <rect key="frame" x="111" y="300" width="591" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -89,7 +85,6 @@
                         <outlet property="boxImageView" destination="QWo-YQ-ZEC" id="8T9-nQ-pi6"/>
                         <outlet property="correctAnimationView" destination="8ZV-mc-3Xd" id="xSE-Vs-3FD"/>
                         <outlet property="correctIconView" destination="AbW-Qd-S9i" id="AM6-38-DbV"/>
-                        <outlet property="headnotchImageView" destination="pjW-VC-8R4" id="FFG-gQ-LdF"/>
                         <outlet property="iPadImageView" destination="WUU-9h-iTb" id="6Fg-nz-FOc"/>
                         <outlet property="instructionTextLabel" destination="ldB-pf-uEo" id="YO6-TA-wBq"/>
                         <outlet property="reflectorImageView" destination="XkK-ie-z7W" id="VUe-M3-KEW"/>
