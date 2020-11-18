@@ -256,22 +256,21 @@ class PlayerViewController: UIViewController {
         }
     }
     
-    func recordAction() {
+    func recordAction(type: String, cid: String) {
         if self.player != nil {
             let currentTime = self.player.currentTime()
             print(CMTimeGetSeconds(currentTime))
             self.duration += CMTimeGetSeconds(currentTime)
         }
         print(self.mediaList[currentMediaIndex], self.like, self.repeatCount, self.duration)
-        let body = ["RepeatPressCount" : self.repeatCount,
+        let body = ["type": type,
+                    "RepeatPressCount" : self.repeatCount,
                     "LikePressed": self.like,
                     "Duration": self.duration] as [String : Any]
         let bodyData = try? JSONSerialization.data(
             withJSONObject: body,
             options: []
         )
-
-        let cid = self.mediaList[currentMediaIndex]
         let baseURL = "https://us-central1-memory-lane-954c7.cloudfunctions.net"
         let endpoint = "/updateAction?uid=\(uid!)&cid=\(cid)"
         let url = URL(string: baseURL + endpoint)
@@ -322,7 +321,7 @@ class PlayerViewController: UIViewController {
         case 2:
             // Next
             if currentMediaIndex < numofMedia {
-                self.recordAction()
+                self.recordAction(type: self.mediaType, cid: self.mediaList[currentMediaIndex])
                 self.repeatCount = 0
                 self.like = false
                 self.duration = 0
@@ -342,17 +341,15 @@ class PlayerViewController: UIViewController {
                 medstatus.isHidden = false
             }
         case 3:
-            if !ended && player != nil{
+            if player != nil{
                 // Play and Pause
                 if isPlaying {
                     player.pause()
-                    //sender.setTitle("play", for: .normal)
                     isPlaying = false
                     medstatus.text = "Paused"
                     medstatus.isHidden = false
                 } else {
                     player.play()
-                    //sender.setTitle("pause", for: .normal)
                     isPlaying = true
                     medstatus.isHidden = true
                 }
