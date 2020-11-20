@@ -16,7 +16,7 @@ let WIDTH = UIScreen.main.bounds.width
 let HEIGHT = UIScreen.main.bounds.height
 let BRIGHTNESS_THRESHOLD: CGFloat = 0.5
 
-class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+class SetupViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     @IBOutlet weak var headnotchImageView: UIImageView!
     @IBOutlet weak var instructionTextLabel: UILabel!
@@ -46,7 +46,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     let buttons = Buttons()
     // Global Bool for validation state
-    var internetConnected = false
     var iPadValidated = false
     var reflectorValidated = false
     var allValidationPassed = false
@@ -58,7 +57,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        self.checkInternetConnection()
         // iPad Placement Validation -> reflector Validation
         self.iPadAngleValidation()
         // set up camera, camera feed, camera output
@@ -183,17 +181,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
 
     
-    private func checkInternetConnection() {
-        if Reachability.isConnectedToNetwork(){
-            print("Internet Connection Available!")
-            self.internetConnected = true
-        }else{
-            self.instructionTextLabel.text = "Internet Connection not Available!"
-            self.subInstructionTextLabel.text = "Memory Lane App cannot work without Internet connection"
-            self.internetConnected = false
-            print("Internet Connection not Available!")
-        }
-    }
+
     
     func buttonDetection(in image: CGImage) {
         DispatchQueue.main.async {

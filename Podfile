@@ -7,6 +7,7 @@ target 'MemoryLane' do
 
   # Pods for MemoryLane
   pod 'lottie-ios'
+  pod 'FoldingCell'
 
   target 'MemoryLaneTests' do
     inherit! :search_paths

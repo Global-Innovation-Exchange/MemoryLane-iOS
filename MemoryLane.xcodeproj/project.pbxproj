@@ -28,12 +28,14 @@
 		705AC7E7255CC15A0020004A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705AC7E6255CC15A0020004A /* Reachability.swift */; };
 		705B2BFF252C05FF00DDC7B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2BFE252C05FF00DDC7B8 /* AppDelegate.swift */; };
 		705B2C01252C05FF00DDC7B8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C00252C05FF00DDC7B8 /* SceneDelegate.swift */; };
-		705B2C03252C05FF00DDC7B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C02252C05FF00DDC7B8 /* ViewController.swift */; };
+		705B2C03252C05FF00DDC7B8 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C02252C05FF00DDC7B8 /* SetupViewController.swift */; };
 		705B2C06252C05FF00DDC7B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 705B2C04252C05FF00DDC7B8 /* Main.storyboard */; };
 		705B2C08252C060200DDC7B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 705B2C07252C060200DDC7B8 /* Assets.xcassets */; };
 		705B2C0B252C060200DDC7B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 705B2C09252C060200DDC7B8 /* LaunchScreen.storyboard */; };
 		705B2C16252C060300DDC7B8 /* MemoryLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C15252C060300DDC7B8 /* MemoryLaneTests.swift */; };
 		705B2C21252C060300DDC7B8 /* MemoryLaneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B2C20252C060300DDC7B8 /* MemoryLaneUITests.swift */; };
+		70A411FE256624AB00C3827B /* ProfileSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A411FD256624AB00C3827B /* ProfileSelectTableViewController.swift */; };
+		70A412652566575100C3827B /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A412642566575000C3827B /* ProfileCell.swift */; };
 		70C4EB86253EB5B400799355 /* Double+roundToDecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4EB85253EB5B400799355 /* Double+roundToDecimal.swift */; };
 		70F2BE74253EB6D300A3B959 /* CALayer+isLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F2BE73253EB6D300A3B959 /* CALayer+isLight.swift */; };
 		70F2BE79253EBAE900A3B959 /* UIImage+withAlphaComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F2BE78253EBAE900A3B959 /* UIImage+withAlphaComponent.swift */; };
@@ -116,7 +118,7 @@
 		705B2BFB252C05FF00DDC7B8 /* MemoryLane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryLane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		705B2BFE252C05FF00DDC7B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		705B2C00252C05FF00DDC7B8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		705B2C02252C05FF00DDC7B8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		705B2C02252C05FF00DDC7B8 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		705B2C05252C05FF00DDC7B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		705B2C07252C060200DDC7B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		705B2C0A252C060200DDC7B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -127,6 +129,8 @@
 		705B2C1C252C060300DDC7B8 /* MemoryLaneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemoryLaneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		705B2C20252C060300DDC7B8 /* MemoryLaneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLaneUITests.swift; sourceTree = "<group>"; };
 		705B2C22252C060300DDC7B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70A411FD256624AB00C3827B /* ProfileSelectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectTableViewController.swift; sourceTree = "<group>"; };
+		70A412642566575000C3827B /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		70C4EB85253EB5B400799355 /* Double+roundToDecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+roundToDecimal.swift"; sourceTree = "<group>"; };
 		70F2BE73253EB6D300A3B959 /* CALayer+isLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+isLight.swift"; sourceTree = "<group>"; };
 		70F2BE78253EBAE900A3B959 /* UIImage+withAlphaComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+withAlphaComponent.swift"; sourceTree = "<group>"; };
@@ -236,7 +240,7 @@
 				705B2C04252C05FF00DDC7B8 /* Main.storyboard */,
 				70059D78254B961600CBCE5C /* Memory Lane 1.mlmodel */,
 				705B2C00252C05FF00DDC7B8 /* SceneDelegate.swift */,
-				705B2C02252C05FF00DDC7B8 /* ViewController.swift */,
+				705B2C02252C05FF00DDC7B8 /* SetupViewController.swift */,
 				705B2C07252C060200DDC7B8 /* Assets.xcassets */,
 				705B2C09252C060200DDC7B8 /* LaunchScreen.storyboard */,
 				705B2C0C252C060200DDC7B8 /* Info.plist */,
@@ -250,6 +254,8 @@
 				70059D4725496A6900CBCE5C /* PlayerViewController.swift */,
 				70059D57254A78A800CBCE5C /* UserDataManager.swift */,
 				705AC7E6255CC15A0020004A /* Reachability.swift */,
+				70A411FD256624AB00C3827B /* ProfileSelectTableViewController.swift */,
+				70A412642566575000C3827B /* ProfileCell.swift */,
 			);
 			path = MemoryLane;
 			sourceTree = "<group>";
@@ -593,13 +599,14 @@
 				705AC7E7255CC15A0020004A /* Reachability.swift in Sources */,
 				703D6AFD2547FFC1004B7219 /* Helper.swift in Sources */,
 				70F2BE7E253EBB8700A3B959 /* UIColor+isLight.swift in Sources */,
-				705B2C03252C05FF00DDC7B8 /* ViewController.swift in Sources */,
+				705B2C03252C05FF00DDC7B8 /* SetupViewController.swift in Sources */,
 				705B2BFF252C05FF00DDC7B8 /* AppDelegate.swift in Sources */,
 				70059D4825496A6900CBCE5C /* PlayerViewController.swift in Sources */,
 				70059D3025492C7100CBCE5C /* ThemeSelectionViewController.swift in Sources */,
 				70059D3A2549622600CBCE5C /* ThemeObjects.swift in Sources */,
 				70C4EB86253EB5B400799355 /* Double+roundToDecimal.swift in Sources */,
 				70059D79254B961700CBCE5C /* Memory Lane 1.mlmodel in Sources */,
+				70A411FE256624AB00C3827B /* ProfileSelectTableViewController.swift in Sources */,
 				703D6B2325482ED4004B7219 /* IntroDataViewController.swift in Sources */,
 				70F2BE83253EBBB900A3B959 /* UIViewController+showToast.swift in Sources */,
 				70059D58254A78A800CBCE5C /* UserDataManager.swift in Sources */,
@@ -607,6 +614,7 @@
 				705B2C01252C05FF00DDC7B8 /* SceneDelegate.swift in Sources */,
 				703D6AE92546BEDC004B7219 /* Buttons.swift in Sources */,
 				703D6B1F25482DC1004B7219 /* IntroViewController.swift in Sources */,
+				70A412652566575100C3827B /* ProfileCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
