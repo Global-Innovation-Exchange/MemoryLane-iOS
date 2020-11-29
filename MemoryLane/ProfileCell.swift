@@ -20,6 +20,11 @@ class ProfileCell: FoldingCell {
     @IBOutlet weak var closeNameLabel: UILabel!
     @IBOutlet weak var openNameLabel: UILabel!
     @IBOutlet weak var detailNameLabel: UILabel!
+    @IBOutlet weak var occupationNameLabel: UILabel!
+    @IBOutlet weak var locationNameLabel: UILabel!
+    @IBOutlet weak var closeSubInfoLabel: UILabel!
+    @IBOutlet weak var openSubInfoLabel: UILabel!
+    @IBOutlet weak var musicPreferenceLabel: UILabel!
     
     weak var delegate: ProfileCellDelegate?
     var userId: String = "test" {
@@ -34,6 +39,35 @@ class ProfileCell: FoldingCell {
         didSet {
             closeNumberLabel.text = String(number)
             openNumberLabel.text = String(number)
+        }
+    }
+    
+    var occupation: String = "Teacher" {
+        didSet {
+            occupationNameLabel.text = occupation
+        }
+    }
+    
+    var location: String = "Bellevue, WA" {
+        didSet {
+            locationNameLabel.text = location
+        }
+    }
+    
+    var subInfo: String = "Male, 90 years old" {
+        didSet {
+            closeSubInfoLabel.text = subInfo
+            openSubInfoLabel.text = subInfo
+        }
+    }
+    
+    var preferedGenre: [String] = [] {
+        didSet {
+            if preferedGenre.count < 1 {
+                musicPreferenceLabel.text = "No preference"
+            } else {
+                musicPreferenceLabel.text = preferedGenre.joined(separator: " ")
+            }
         }
     }
 

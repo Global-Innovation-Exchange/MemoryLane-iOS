@@ -463,13 +463,18 @@
                                 <connections>
                                     <outlet property="closeNameLabel" destination="YVc-3i-Asp" id="Q14-LA-W5R"/>
                                     <outlet property="closeNumberLabel" destination="o7t-mC-d4d" id="vqE-Eu-cCZ"/>
+                                    <outlet property="closeSubInfoLabel" destination="QnJ-hb-rVB" id="HBt-2x-z2l"/>
                                     <outlet property="containerView" destination="KGk-er-Czt" id="hZt-9K-nnt"/>
                                     <outlet property="containerViewTop" destination="vQf-EA-Vae" id="BEW-ot-rfx"/>
                                     <outlet property="detailNameLabel" destination="MFx-WV-O0z" id="NW9-ha-KOP"/>
                                     <outlet property="foregroundView" destination="OiB-mS-NSh" id="ZnQ-UM-xFE"/>
                                     <outlet property="foregroundViewTop" destination="gK3-c9-sHq" id="Oqy-4J-rFw"/>
+                                    <outlet property="locationNameLabel" destination="WBY-CD-ym1" id="tlu-r4-1y0"/>
+                                    <outlet property="musicPreferenceLabel" destination="yRk-wQ-feE" id="akm-gc-x28"/>
+                                    <outlet property="occupationNameLabel" destination="ozQ-jU-2OB" id="NCs-tB-uq7"/>
                                     <outlet property="openNameLabel" destination="vtr-rz-1Z0" id="Edo-eC-hEf"/>
                                     <outlet property="openNumberLabel" destination="hmB-H9-7gH" id="GfI-3L-huu"/>
+                                    <outlet property="openSubInfoLabel" destination="ruy-Up-avY" id="3oX-K2-bHm"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

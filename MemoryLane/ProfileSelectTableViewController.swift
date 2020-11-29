@@ -17,7 +17,14 @@ class ProfileSelectTableViewController: UITableViewController, ProfileCellDelega
     }
     
     struct Profile: Codable {
-        let user_id, user_name: String?
+        let user_id: String?
+        let profile: ProfileInfo
+    }
+    
+    struct ProfileInfo: Codable {
+        let name, gender, location, occupation: String?
+        let age: Int?
+        let prefered_genre: [String]?
     }
     
     enum Const {
@@ -31,13 +38,14 @@ class ProfileSelectTableViewController: UITableViewController, ProfileCellDelega
     var internetConnected = false
     let caregiverId = "memorylane"
     let baseURL = "https://us-central1-memory-lane-954c7.cloudfunctions.net"
-    
+     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.fetchProfiles(profilesCompletionHandler: { profileList, error in
           if let profileList = profileList {
             DispatchQueue.main.async() {
                 self.instructionTextLabel.text = "Please select a profile"
+//                print(profileList.profiles)
                 self.profiles = profileList.profiles
                 self.tableView.reloadData()
             }
@@ -82,7 +90,7 @@ class ProfileSelectTableViewController: UITableViewController, ProfileCellDelega
     }
     
     func fetchProfiles(profilesCompletionHandler: @escaping (Profiles?, Error?) -> Void){
-        let endpoint = "/getProfiles?uid=\(caregiverId)"
+        let endpoint = "/showProfiles?id=\(caregiverId)"
         let url = URL(string: baseURL + endpoint)
         let request = URLRequest(url: url!)
         let session = URLSession.shared
@@ -148,7 +156,13 @@ extension ProfileSelectTableViewController {
 
         cell.number = indexPath.row + 1
         if self.profiles.count > 0 {
-            cell.userId = self.profiles[indexPath.row].user_name ?? "test"
+            let p = self.profiles[indexPath.row].profile
+            cell.userId = p.name ?? "test"
+            cell.occupation = p.occupation ?? "Teacher"
+            cell.location = p.location ?? "Bellevue, WA"
+//            print("\(p.gender ?? "Male"), \(p.age ?? 75) years old")
+            cell.subInfo = "\(p.gender ?? "Male"), \(p.age ?? 75) years old"
+            cell.preferedGenre = p.prefered_genre ?? []
         }
     }
 
