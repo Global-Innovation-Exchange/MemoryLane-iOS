@@ -30,6 +30,8 @@ class SetupViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffe
     
     @IBOutlet weak var angleLabel: UILabel!
     
+    var profileId = "test"
+    
     private let captureSession = AVCaptureSession()
     lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
     private let videoDataOutput = AVCaptureVideoDataOutput()
@@ -217,6 +219,7 @@ class SetupViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffe
         DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             if let vc = mainStoryboard.instantiateViewController(withIdentifier: String(describing: IntroViewController.self)) as? IntroViewController {
+                vc.profileId = self.profileId
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true, completion: nil)
             }

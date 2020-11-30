@@ -9,6 +9,8 @@ import UIKit
 
 class IntroPageViewController: UIPageViewController{
     
+    var profileId = "test"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(handleButtonPressed), name: Notification.Name("Button Pressed"), object: nil)
@@ -59,6 +61,8 @@ class IntroPageViewController: UIPageViewController{
             let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             if let vc = mainStoryboard.instantiateViewController(withIdentifier: String(describing: ThemeSelectionViewController.self)) as? ThemeSelectionViewController {
                 vc.modalPresentationStyle = .fullScreen
+                vc.uid = self.profileId
+                print(vc.uid)
                 self.present(vc, animated: true, completion: nil)
             }
         })

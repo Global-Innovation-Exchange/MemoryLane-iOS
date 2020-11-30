@@ -19,6 +19,7 @@ class IntroViewController: UIViewController {
         ["display": "Use the \"Play/Pause\" button to control the media playing. \n\nPress \"Play/Pause\" button to proceed", "centerX": CGFloat(388), "centerY": CGFloat(717.5)]
     ]
     
+    var profileId = "test"
     var currentViewControllerIndex = 0
     
     override func viewDidLoad() {
@@ -35,6 +36,7 @@ class IntroViewController: UIViewController {
         
         pageViewController.delegate = self
         pageViewController.dataSource = self
+        pageViewController.profileId = self.profileId
         
         addChild(pageViewController)
         pageViewController.didMove(toParent: self)

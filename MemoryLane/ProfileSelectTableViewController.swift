@@ -30,7 +30,7 @@ class ProfileSelectTableViewController: UITableViewController, ProfileCellDelega
     enum Const {
         static let closeCellHeight: CGFloat = 100
         static let openCellHeight: CGFloat = 488
-        static let rowsCount = 3
+        static let rowsCount = 10
     }
     var cellHeights: [CGFloat] = []
     var profiles = [Profile]()
@@ -41,17 +41,20 @@ class ProfileSelectTableViewController: UITableViewController, ProfileCellDelega
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetchProfiles(profilesCompletionHandler: { profileList, error in
-          if let profileList = profileList {
-            DispatchQueue.main.async() {
-                self.instructionTextLabel.text = "Please select a profile"
-//                print(profileList.profiles)
-                self.profiles = profileList.profiles
-                self.tableView.reloadData()
-            }
-          }
-        })
-        setup()
+        self.checkInternetConnection()
+        if self.internetConnected {
+            self.fetchProfiles(profilesCompletionHandler: { profileList, error in
+              if let profileList = profileList {
+                DispatchQueue.main.async() {
+                    self.instructionTextLabel.text = "Please select a profile"
+    //                print(profileList.profiles)
+                    self.profiles = profileList.profiles
+                    self.tableView.reloadData()
+                }
+              }
+            })
+            setup()
+        }
     }
     
     // MARK: Helpers
@@ -120,11 +123,12 @@ class ProfileSelectTableViewController: UITableViewController, ProfileCellDelega
         task.resume()
     }
     
-    func switchScreen() {
-        let delayTime = DispatchTime.now() + 0.0
+    func switchScreen(profileId: String) {
+        let delayTime = DispatchTime.now() + 0.5
         DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             if let vc = mainStoryboard.instantiateViewController(withIdentifier: "SetupViewController") as? SetupViewController {
+                vc.profileId = profileId
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true, completion: nil)
             }
@@ -157,7 +161,8 @@ extension ProfileSelectTableViewController {
         cell.number = indexPath.row + 1
         if self.profiles.count > 0 {
             let p = self.profiles[indexPath.row].profile
-            cell.userId = p.name ?? "test"
+            cell.profileId = self.profiles[indexPath.row].user_id ?? "test"
+            cell.userName = p.name ?? "test"
             cell.occupation = p.occupation ?? "Teacher"
             cell.location = p.location ?? "Bellevue, WA"
 //            print("\(p.gender ?? "Male"), \(p.age ?? 75) years old")

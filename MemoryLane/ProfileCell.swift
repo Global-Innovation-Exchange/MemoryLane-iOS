@@ -10,7 +10,7 @@ import FoldingCell
 import UIKit
 
 protocol ProfileCellDelegate: class {
-    func switchScreen()
+    func switchScreen(profileId: String)
 }
 
 class ProfileCell: FoldingCell {
@@ -27,11 +27,11 @@ class ProfileCell: FoldingCell {
     @IBOutlet weak var musicPreferenceLabel: UILabel!
     
     weak var delegate: ProfileCellDelegate?
-    var userId: String = "test" {
+    var userName: String = "test" {
         didSet {
-            closeNameLabel.text = userId
-            openNameLabel.text = userId
-            detailNameLabel.text = userId
+            closeNameLabel.text = userName
+            openNameLabel.text = userName
+            detailNameLabel.text = userName
         }
     }
     
@@ -70,7 +70,9 @@ class ProfileCell: FoldingCell {
             }
         }
     }
-
+    
+    var profileId: String = "test"
+    
     override func awakeFromNib() {
         foregroundView.layer.cornerRadius = 10
         foregroundView.layer.masksToBounds = true
@@ -88,6 +90,6 @@ class ProfileCell: FoldingCell {
 extension ProfileCell {
     
     @IBAction func buttonHandler(_: AnyObject) {
-        delegate?.switchScreen()
+        delegate?.switchScreen(profileId: profileId)
     }
 }
